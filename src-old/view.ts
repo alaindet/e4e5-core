@@ -1,6 +1,6 @@
-import { BoardCoordinate as B } from './board';
+import { BoardCoordinate as B, BoardMap, BoardState, SQUARE_COLOR } from './board';
+import { ConsoleColorText, logWithColor, ConsoleColorBackground } from './console-utils';
 import { Color, Figure } from './piece';
-import { BoardMap } from './state';
 
 export type ViewSymbols = {
   pieces: {
@@ -8,8 +8,8 @@ export type ViewSymbols = {
       [figure in Figure]: string;
     };
   },
-  squares: {
-    [color in Color]: string;
+  background: {
+    [color in Color]: ConsoleColorBackground;
   },
 };
 
@@ -32,34 +32,34 @@ export type ViewSymbols = {
 //       [Figure.Pawn]: '♟',
 //     },
 //   },
-//   squares: {
-//     [Color.Light]: '□',
-//     [Color.Dark]: '■',
+//   background: {
+//     [Color.Light]: ConsoleColorBackground.Blue,
+//     [Color.Dark]: ConsoleColorBackground.Red,
 //   },
 // };
 
 export const SYMBOLS: ViewSymbols = {
   pieces: {
     [Color.Light]: {
-      [Figure.King]: 'K',
-      [Figure.Queen]: 'Q',
-      [Figure.Bishop]: 'B',
-      [Figure.Knight]: 'N',
-      [Figure.Rook]: 'R',
-      [Figure.Pawn]: 'P',
+      [Figure.King]: 'K▫',
+      [Figure.Queen]: 'Q▫',
+      [Figure.Bishop]: 'B▫',
+      [Figure.Knight]: 'N▫',
+      [Figure.Rook]: 'R▫',
+      [Figure.Pawn]: 'P▫',
     },
     [Color.Dark]: {
-      [Figure.King]: 'k',
-      [Figure.Queen]: 'q',
-      [Figure.Bishop]: 'b',
-      [Figure.Knight]: 'n',
-      [Figure.Rook]: 'r',
-      [Figure.Pawn]: 'p',
+      [Figure.King]: 'K▪',
+      [Figure.Queen]: 'Q▪',
+      [Figure.Bishop]: 'B▪',
+      [Figure.Knight]: 'N▪',
+      [Figure.Rook]: 'R▪',
+      [Figure.Pawn]: 'P▪',
     },
   },
-  squares: {
-    [Color.Light]: '□',
-    [Color.Dark]: '■',
+  background: {
+    [Color.Light]: ConsoleColorBackground.Blue,
+    [Color.Dark]: ConsoleColorBackground.Red,
   },
 };
 
@@ -77,10 +77,16 @@ export const viewBoard = (board: BoardMap): string => {
   .map(rank => {
     return rank.map(coord => {
       const piece = board[coord];
-      return piece
-        ? SYMBOLS.pieces[piece.color][piece.figure]
-        : SYMBOLS.squares[Color.Light];
+      const squareColor = SQUARE_COLOR[coord];
+      let symbol = piece ? SYMBOLS.pieces[piece.color][piece.figure] : ' ';
+      symbol = piece ? `${symbol}` : '  ';
+      const squareFmt = SYMBOLS.background[squareColor];
+      return logWithColor(symbol, ConsoleColorText.White, squareFmt);
     }).join('');
   })
   .join('\n');
+};
+
+export const viewGame = (state: BoardState): string => {
+  return viewBoard(state.board);
 };

@@ -1,6 +1,5 @@
-import { BoardCoordinate, getBoardMap } from './board';
+import { BoardCoordinate, BoardMap, BoardState, getBoardMap, getBoardState } from './board';
 import { Color, Figure, AbstractPieces } from './piece';
-import { BoardMap } from './state';
 
 export const INITIAL_PIECES: AbstractPieces = [
   { figure: Figure.King, color: Color.Light, coordinate: BoardCoordinate.E1 },
@@ -39,3 +38,5 @@ export const INITIAL_PIECES: AbstractPieces = [
 ];
 
 export const INITIAL_BOARD_MAP: BoardMap = getBoardMap(INITIAL_PIECES);
+
+export const INITIAL_GAME: BoardState = getBoardState(INITIAL_PIECES);

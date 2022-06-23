@@ -1,3 +1,4 @@
-import { INITIAL_BOARD } from './initial-state';
+import { INITIAL_BOARD_MAP } from './initial';
+import { viewBoard } from './view';
 
-console.log('INITIAL_BOARD', INITIAL_BOARD);
+console.log(viewBoard(INITIAL_BOARD_MAP));

@@ -6,3 +6,22 @@ export const range = (fromOrTo: number, to?: number): number[] => {
   }
   return result;
 };
+
+export const chunkArray = <T = any>(arr: T[], chunkSize: number): T[][] => {
+  const chunks: T[][] = [];
+  let chunk: T[] = [];
+
+  for (let i = 0; i < arr.length; i++) {
+    chunk.push(arr[i]);
+    if (chunk.length === chunkSize) {
+      chunks.push(chunk);
+      chunk = [];
+    }
+  }
+
+  if (chunk.length) {
+    chunks.push(chunk);
+  }
+
+  return chunks;
+};

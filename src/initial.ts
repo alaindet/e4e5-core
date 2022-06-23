@@ -1,9 +1,8 @@
-import { BoardCoordinate } from './board';
-import { getBoardState } from './functions';
-import { Color, Figure, PiecesList } from './piece';
+import { BoardCoordinate, getBoardMap } from './board';
+import { Color, Figure, AbstractPieces } from './piece';
 import { BoardMap } from './state';
 
-export const INITIAL_PIECES: PiecesList = [
+export const INITIAL_PIECES: AbstractPieces = [
   { figure: Figure.King, color: Color.Light, coordinate: BoardCoordinate.E1 },
   { figure: Figure.Queen, color: Color.Light, coordinate: BoardCoordinate.D1 },
   { figure: Figure.Bishop, color: Color.Light, coordinate: BoardCoordinate.C1 },
@@ -27,8 +26,8 @@ export const INITIAL_PIECES: PiecesList = [
   { figure: Figure.Bishop, color: Color.Dark, coordinate: BoardCoordinate.F8 },
   { figure: Figure.Knight, color: Color.Dark, coordinate: BoardCoordinate.B8 },
   { figure: Figure.Knight, color: Color.Dark, coordinate: BoardCoordinate.G8 },
-  { figure: Figure.Rook, color: Color.Dark, coordinate: BoardCoordinate.A7 },
-  { figure: Figure.Rook, color: Color.Dark, coordinate: BoardCoordinate.H7 },
+  { figure: Figure.Rook, color: Color.Dark, coordinate: BoardCoordinate.A8 },
+  { figure: Figure.Rook, color: Color.Dark, coordinate: BoardCoordinate.H8 },
   { figure: Figure.Pawn, color: Color.Dark, coordinate: BoardCoordinate.A7 },
   { figure: Figure.Pawn, color: Color.Dark, coordinate: BoardCoordinate.B7 },
   { figure: Figure.Pawn, color: Color.Dark, coordinate: BoardCoordinate.C7 },
@@ -39,4 +38,4 @@ export const INITIAL_PIECES: PiecesList = [
   { figure: Figure.Pawn, color: Color.Dark, coordinate: BoardCoordinate.H7 },
 ];
 
-export const INITIAL_BOARD: BoardMap = getBoardState(INITIAL_PIECES);
+export const INITIAL_BOARD_MAP: BoardMap = getBoardMap(INITIAL_PIECES);

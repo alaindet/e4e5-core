@@ -14,6 +14,21 @@ export interface GameState {
   };
 }
 
+// Thanks to https://bobbyhadz.com/blog/typescript-extend-error-class
+export class NoPieceFoundError extends Error {
+  constructor(message: string) {
+    super(message);
+    Object.setPrototypeOf(this, NoPieceFoundError.prototype);
+  }
+}
+
+export class PieceOwnershipError extends Error {
+  constructor(message: string) {
+    super(message);
+    Object.setPrototypeOf(this, PieceOwnershipError.prototype);
+  }
+}
+
 export const createGame = (): GameState => {
   return createGameFromPosition(INITIAL_POSITION, Color.Light);
 };
@@ -62,7 +77,7 @@ export const updateGame = (game: GameState, move: Move): GameState => {
 
   // No piece to move!
   if (fromPiece === EMPTY_SQUARE) {
-    throw new Error(`No piece found on square ${move.from}`);
+    throw new NoPieceFoundError(`No piece found on square ${move.from}`);
   }
 
   const toPiece = game.board[move.to];
@@ -72,7 +87,7 @@ export const updateGame = (game: GameState, move: Move): GameState => {
 
   // It's not your piece!
   if (fromPiece.color !== game.turn) {
-    throw new Error('You cannot move pieces of your opponent');
+    throw new PieceOwnershipError('You cannot move pieces of your opponent');
   }
 
   // Capturing?

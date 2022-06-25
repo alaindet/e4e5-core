@@ -3,6 +3,8 @@ import { Piece } from './piece';
 
 export type BoardCoordinate = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8;
 
+export type BoardCoordinates = [BoardCoordinate, BoardCoordinate];
+
 export enum BoardFile {
   A = 'A',
   B = 'B',
@@ -45,6 +47,35 @@ export enum BoardSquare {
   H1 = 'H1', H2 = 'H2', H3 = 'H3', H4 = 'H4', H5 = 'H5', H6 = 'H6', H7 = 'H7', H8 = 'H8',
 }
 
+export enum BoardDirection {
+  Top = 'top',
+  Right = 'right',
+  Bottom = 'bottom',
+  Left = 'left',
+  DiagonalTopRight = 'diagonal-top-right',
+  DiagonalBottomRight = 'diagonal-bottom-right',
+  DiagonalTopLeft = 'diagonal-top-left',
+  DiagonalBottomLeft = 'diagonal-bottom-left',
+}
+
+export class NoSquareFoundError extends Error {
+  constructor(message: string) {
+    super(message);
+    Object.setPrototypeOf(this, NoSquareFoundError.prototype);
+  }
+}
+
+export const BOARD_MOVEMENT: { [dir in BoardDirection]: [number, number] } = {
+  [BoardDirection.Top]: [0, 1],
+  [BoardDirection.Right]: [1, 0],
+  [BoardDirection.Bottom]: [0, -1],
+  [BoardDirection.Left]: [-1, 0],
+  [BoardDirection.DiagonalTopRight]: [1, 1],
+  [BoardDirection.DiagonalBottomRight]: [1, -1],
+  [BoardDirection.DiagonalTopLeft]: [-1, 1],
+  [BoardDirection.DiagonalBottomLeft]: [-1, -1],
+};
+
 export const BOARD_FILE_TO_COORDINATE: { [file in BoardFile]: BoardCoordinate } = {
   [BoardFile.A]: 1,
   [BoardFile.B]: 2,
@@ -56,18 +87,67 @@ export const BOARD_FILE_TO_COORDINATE: { [file in BoardFile]: BoardCoordinate } 
   [BoardFile.H]: 8,
 };
 
-export const EMPTY_SQUARE = null;
-
-// Ex.: 'B3' => 2 + 5 is odd => light square
-export const getSquareColor = (square: BoardSquare): Color => {
-  const file = BOARD_FILE_TO_COORDINATE[square[0] as BoardFile];
-  const rank = +square[1];
-  return (file + rank) % 2 === 0 ? Color.Dark : Color.Light;
+export const BOARD_COORDINATE_TO_FILE: { [c in BoardCoordinate]: BoardFile} = {
+  1: BoardFile.A,
+  2: BoardFile.B,
+  3: BoardFile.C,
+  4: BoardFile.D,
+  5: BoardFile.E,
+  6: BoardFile.F,
+  7: BoardFile.G,
+  8: BoardFile.H,
 };
+
+export const EMPTY_SQUARE = null;
+export const MAX_BOARD_SIDE = 8;
 
 export const getEmptyBoard = (): BoardState => {
   return Object.values(BoardSquare).reduce((board, square) => {
     board[square] = null;
     return board;
   }, {} as BoardState);
+};
+
+export const getSquareCoordinates = (square: BoardSquare): BoardCoordinates => {
+  const file = BOARD_FILE_TO_COORDINATE[square[0] as BoardFile];
+  const rank = +square[1];
+  return [file, rank as BoardCoordinate];
+};
+
+export const getSquareFromCoordinates = (
+  file: BoardCoordinate,
+  rank: BoardCoordinate,
+): BoardSquare => {
+  return `${BOARD_COORDINATE_TO_FILE[file]}${rank}` as BoardSquare;
+};
+
+// Ex.: 'B3' => 2 + 5 is odd => light square
+export const getSquareColor = (square: BoardSquare): Color => {
+  const [file, rank] = getSquareCoordinates(square);
+  return (file + rank) % 2 === 0 ? Color.Dark : Color.Light;
+};
+
+export const getToSquare = (
+  square: BoardSquare,
+  dir: BoardDirection,
+  amount = 1,
+): BoardSquare => {
+
+  if (amount < 0 || amount > MAX_BOARD_SIDE - 1) {
+    throw new NoSquareFoundError(`You cannot move by ${amount} squares`);
+  }
+
+  const [file, rank] = getSquareCoordinates(square);
+  let [fileDiff, rankDiff] = BOARD_MOVEMENT[dir];
+  const nextFile = file + fileDiff * amount;
+  const nextRank = rank + rankDiff * amount;
+
+  if (nextFile > MAX_BOARD_SIDE || nextRank > MAX_BOARD_SIDE) {
+    throw new NoSquareFoundError(`Square not found`);
+  }
+
+  return getSquareFromCoordinates(
+    nextFile as BoardCoordinate,
+    nextRank as BoardCoordinate,
+  );
 };

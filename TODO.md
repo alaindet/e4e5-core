@@ -4,3 +4,4 @@
 - [ ] Special move: En Passant
 - [ ] Serialization/deserialization in common formats
 - [ ] Add custom errors
+- [ ] Testing

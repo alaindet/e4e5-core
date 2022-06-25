@@ -1,13 +1,15 @@
-import { BoardState, Castling, EMPTY_SQUARE, getEmptyBoard, BoardSquare } from './board';
+import { BoardState, EMPTY_SQUARE, getEmptyBoard } from './board';
 import { Color, getOppositeColor } from './common';
 import { INITIAL_POSITION } from './initial';
-import { Move, CastlingMove, MoveType } from './move';
+import { Move, MoveType } from './move';
 import { getCastlingSquares } from './move-castling';
-import { PlacedPiece, Piece, GamePosition, getPiecesChecklist, AbstractPieceToken, getPieceToken, getPieceId, getPieceFromToken } from './piece';
+import { PlacedPiece, Piece, GamePosition, getPiecesChecklist, getPieceToken, getPieceId, getPieceFromToken } from './piece';
+import { inCheck } from './check';
 
 export interface GameState {
   board: BoardState;
   turn: Color;
+  inCheck: boolean;
   pieces: PlacedPiece[];
   capturedPieces: {
     [color in Color]: Piece[];
@@ -59,11 +61,14 @@ export const createGameFromPosition = (position: GamePosition, turn: Color): Gam
     capturedPieces[oppositeColor].push(piece);
   }
 
-  return { board, turn, pieces, capturedPieces };
+  const game = { board, turn, inCheck: false, pieces, capturedPieces };
+  game.inCheck = inCheck(board, pieces, turn);
+  return game;
 };
 
 export const updateGame = (game: GameState, move: Move): GameState => {
 
+  // Castling
   if (move.type === MoveType.Castling) {
     const squares = getCastlingSquares(move.castling, game.turn);
     game.board[squares.kingTo] = game.board[squares.kingFrom];
@@ -95,9 +100,13 @@ export const updateGame = (game: GameState, move: Move): GameState => {
     game.capturedPieces[game.turn].push(toPiece);
   }
 
+  // Promoting?
+  if (move.type === MoveType.Promotion) {
+    fromPiece.figure = move.promoteTo;
+  }
+
   // TODO: pawn promote
   // TODO: en passant
-  // TODO: castling
 
   // Just move the piece
   game.board[move.from] = EMPTY_SQUARE;

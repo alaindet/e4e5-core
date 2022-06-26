@@ -2,29 +2,29 @@ import { BoardState } from './board';
 import { Color, getOppositeColor } from './common';
 import { Figure, PlacedPiece } from './piece';
 
+export const isAttackingKing = (attacker: PlacedPiece, king: PlacedPiece): boolean => {
+  // TODO: Strategy pattern?
+  return false;
+};
+
 export const inCheck = (
   board: BoardState,
   pieces: PlacedPiece[],
   turn: Color,
 ): boolean => {
 
-  let king: PlacedPiece;
-  const opposingPieces: PlacedPiece[] = [];
-  const oppositeColor = getOppositeColor(turn);
-
-  pieces.forEach(piece => {
-    switch (piece.color) {
-      case turn:
-        if (piece.figure === Figure.King) {
-          king = piece;
-        }
-      case oppositeColor:
-        opposingPieces.push(piece);
-    }
-  });
+  // TODO: Could be done in one loop!
+  const king = pieces.filter(p => p.color === turn && p.figure === Figure.King)[0];
+  const opposingPieces = pieces.filter(p => p.color !== turn);
 
   // TODO
   // Check each opposing piece with the king
+
+  for (const piece of opposingPieces) {
+    if (isAttackingKing(piece, king)) {
+      return true;
+    }
+  }
 
   return false;
 };

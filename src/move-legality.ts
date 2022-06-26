@@ -1,21 +1,7 @@
-import { BoardSquareLabel } from './board';
+import { Move, MoveType } from './move';
 import { GameState } from './state';
 
-export const isMoveLegal = (
-  game: GameState,
-  from: BoardSquareLabel,
-  to: BoardSquareLabel,
-): boolean => {
-
-  // TODO
-  return true;
-};
-
-export const isFigureMoveLegal = (
-  game: GameState,
-  from: BoardSquareLabel,
-  to: BoardSquareLabel,
-): boolean => {
+export const isMoveLegal = (game: GameState, move: Move): boolean => {
   // TODO
   return true;
 };

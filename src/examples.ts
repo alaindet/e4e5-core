@@ -71,6 +71,17 @@ export const example5 = () => {
   });
 };
 
+// Illegal move for pawns
+export const example6 = () => {
+  try {
+    let game = createGame();
+    game = updateGame(game, createMove('E2', 'F4'));
+    viewGame(game);
+  } catch (error) {
+    console.log('ERROR', error);
+  }
+};
+
 export const runExamples = () => {
   // example1();
   // example2();

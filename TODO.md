@@ -1,7 +1,7 @@
 - [ ] Move legality
-- [ ] Special move: Promotion
-- [ ] Special move: Castling
+- [x] Special move: Promotion
+- [x] Special move: Castling
 - [ ] Special move: En Passant
 - [ ] Serialization/deserialization in common formats
-- [ ] Add custom errors
+- [x] Add custom errors
 - [ ] Testing

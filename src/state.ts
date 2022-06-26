@@ -5,6 +5,7 @@ import { Move, MoveType } from './move';
 import { getCastlingSquares } from './move-castling';
 import { PlacedPiece, Piece, GamePosition, getPiecesChecklist, getPieceToken, getPieceId, getPieceFromToken } from './piece';
 import { inCheck } from './check';
+import { isMoveLegal } from './move-legality';
 
 export interface GameState {
   board: BoardState;
@@ -68,8 +69,14 @@ export const createGameFromPosition = (position: GamePosition, turn: Color): Gam
 
 export const updateGame = (game: GameState, move: Move): GameState => {
 
+  // TODO
+  if (!isMoveLegal(game, move)) {
+    return game;
+  }
+
   // Castling
   if (move.type === MoveType.Castling) {
+    // TODO: Check castling legality
     const squares = getCastlingSquares(move.castling, game.turn);
     game.board[squares.kingTo] = game.board[squares.kingFrom];
     game.board[squares.kingFrom] = null;
@@ -105,7 +112,6 @@ export const updateGame = (game: GameState, move: Move): GameState => {
     fromPiece.figure = move.promoteTo;
   }
 
-  // TODO: pawn promote
   // TODO: en passant
 
   // Just move the piece

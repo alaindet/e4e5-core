@@ -55,7 +55,7 @@ export const isPawnEnPassantMove = (game: GameState, move: BasicMove): boolean =
     game.lastMove.type === MoveType.PawnDoubleStep &&
     getSquaresDistance(game.lastMove.to, move.from) === 1 &&
     game.board[move.to] === null &&
-    move.to === getToSquare(game.lastMove.to, PAWN_DIRECTION[game.turn].ahead, -1)
+    move.to === getToSquare(game.lastMove.to, PAWN_DIRECTION[game.turn].ahead, 1)
   );
 };
 

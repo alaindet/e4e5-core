@@ -71,23 +71,30 @@ export const example5 = () => {
   });
 };
 
-// Illegal move for pawns
+// En passant
 export const example6 = () => {
 
   const position = [
     { figure: Figure.King, color: Color.Light, square: BoardSquare.E1 },
     { figure: Figure.Pawn, color: Color.Light, square: BoardSquare.E2 },
     { figure: Figure.King, color: Color.Dark, square: BoardSquare.E8 },
-    { figure: Figure.Pawn, color: Color.Dark, square: BoardSquare.E7 },
+    { figure: Figure.Pawn, color: Color.Dark, square: BoardSquare.F4 },
+  ];
+
+  const movesFirst = Color.Light;
+
+  const moves = [
+    createMove('E2', 'E4'),
+    createMove('F4', 'E3'),
   ];
 
   try {
-    let game = createGameFromPosition(position, Color.Light);
-    game = updateGame(game, createMove('E2', 'E4')); // Double-step
-    // TODO: Capture
-    // TODO: En passant
-    // TODO: Illegal move
+    let game = createGameFromPosition(position, movesFirst);
     viewGame(game);
+    moves.forEach(move => {
+      game = updateGame(game, move)
+      viewGame(game);
+    });
   } catch (error) {
     console.log('ERROR', error);
   }

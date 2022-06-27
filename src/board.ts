@@ -120,7 +120,7 @@ export const getToSquare = (
   amount = 1,
 ): BoardSquare => {
 
-  if (amount < 0 || amount > MAX_BOARD_SIDE - 1) {
+  if (Math.abs(amount) > MAX_BOARD_SIDE - 1) {
     throw new NoSquareFoundError(`You cannot move by ${amount} squares`);
   }
 

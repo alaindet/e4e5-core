@@ -68,7 +68,7 @@ export const createPawnEnPassantMove = (move: BasicMove): PawnEnPassantMove => (
 export const isPawnDoubleStepMove = (game: GameState, move: BasicMove): boolean => {
   return (
     game.board[move.from]?.figure === Figure.Pawn &&
-    game.board[move.to] !== null &&
+    game.board[move.to] === null &&
     getSquaresDistance(move.from, move.to) === 2
   )
 };

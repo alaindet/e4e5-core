@@ -1,3 +1,3 @@
-import { runExamples } from './examples';
+import { runExamples } from './_examples';
 
 runExamples();

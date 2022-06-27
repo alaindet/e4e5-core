@@ -44,6 +44,7 @@ export const createGame = (): GameState => {
   return createGameFromPosition(INITIAL_POSITION, Color.Light);
 };
 
+// TODO: Validate position?
 export const createGameFromPosition = (position: GamePosition, turn: Color): GameState => {
   const board = getEmptyBoard();
   const pieces: PlacedPiece[] = [];

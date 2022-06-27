@@ -1,16 +1,22 @@
 {
   "compilerOptions": {
-    "target": "es5",
-    "module": "commonjs",
-    "lib": [
-      "es6"
-    ],
     "allowJs": true,
-    "outDir": "./build",
-    "rootDir": "./src",
-    "strict": true,
-    "noImplicitAny": true,
+    "allowSyntheticDefaultImports": true,
+    "baseUrl": "./src",
     "esModuleInterop": true,
-    "resolveJsonModule": true
-  }
+    "isolatedModules": true,
+    "lib": ["es6"],
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "noImplicitAny": true,
+    "outDir": "./dist",
+    "resolveJsonModule": true,
+    "rootDir": "./src",
+    "skipLibCheck": true,
+    "strict": true,
+    "target": "es2017",
+    "types": ["node", "jest"],
+  },
+  "compileOnSave": true,
+  "include": ["."]
 }

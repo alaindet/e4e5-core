@@ -45,7 +45,10 @@ export const createGame = (): GameState => {
 };
 
 // TODO: Validate position?
-export const createGameFromPosition = (position: GamePosition, turn: Color): GameState => {
+export const createGameFromPosition = (
+  position: GamePosition,
+  turn: Color = Color.Light,
+): GameState => {
   const board = getEmptyBoard();
   const pieces: PlacedPiece[] = [];
   const capturedPieces: GameState['capturedPieces'] = {

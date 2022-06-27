@@ -5,7 +5,7 @@ import { Figure } from '../piece';
 import { createGame, updateGame } from '../state';
 import { assertBoardState } from './utils';
 
-describe('Game', () => {
+describe('Game basics', () => {
 
   it ('should create a game with default position', () => {
     let game = createGame();

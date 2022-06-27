@@ -58,6 +58,7 @@ export const CASTLING_SQUARES: {
 };
 
 export const isCastlingLegal = (game: GameState, castling: Castling): boolean => {
+
   if (game.inCheck) {
     return false;
   }
@@ -66,7 +67,8 @@ export const isCastlingLegal = (game: GameState, castling: Castling): boolean =>
 
   let king: PlacedPiece | null = null;
   let rook: PlacedPiece | null = null;
-  
+
+  // Extract king and rook
   for (const piece of game.pieces) {
 
     if (
@@ -78,7 +80,7 @@ export const isCastlingLegal = (game: GameState, castling: Castling): boolean =>
       king = piece;
       if (rook) break;
     }
-    
+
     if (
       piece.color === game.turn &&
       piece.square === squares.rookFrom &&
@@ -90,13 +92,16 @@ export const isCastlingLegal = (game: GameState, castling: Castling): boolean =>
     }
   }
 
+  // TODO: Should not transit on attacked square
+  // ...
+
   // There should be a king and a rook with no previous movements
   if (!king || !rook) {
     return false;
   }
 
   // There should be nothing in between
-  for (const square in squares.inBetween) {
+  for (const square of squares.inBetween) {
     if (game.board[square as BoardSquare] !== null) {
       return false;
     }

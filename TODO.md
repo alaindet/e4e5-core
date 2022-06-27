@@ -5,4 +5,5 @@
 - [ ] Serialization/deserialization in common formats
 - [x] Add custom errors
 - [ ] Test most functions
+- [ ] Move examples into tests
 - [ ] Fix build

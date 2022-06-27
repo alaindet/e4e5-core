@@ -5,7 +5,7 @@
   "main": "src/index.ts",
   "scripts": {
     "start": "npx nodemon",
-    "start:once": "npx ts-node ./src/index.ts",
+    "exec": "npx ts-node ./src/index.ts",
     "build": "rimraf ./dist && tsc -p tsconfig.build.json",
     "test": "jest",
     "test:watch": "jest --watch"

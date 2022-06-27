@@ -49,7 +49,7 @@ npm start # Alias
 ### Run once
 
 ```bash
-npm run start:once
+npm run exec
 npm run once # Alias
 ```
 
@@ -60,4 +60,18 @@ Compiles TypeScript files from `./src/` into `./build/`
 
 ```bash
 npm run build
+```
+
+### Test
+
+```bash
+npm run test
+npm run test:watch # Watch mode
+```
+
+### Test one thing
+
+```bash
+npm run test -- -t 'TEST_NAME'
+npm run test:watch -- -t 'TEST_NAME'
 ```

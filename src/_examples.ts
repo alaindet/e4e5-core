@@ -2,7 +2,7 @@ import { BoardDirection, BoardSquare, getToSquare } from './board';
 import { Color } from './common';
 import { createMove } from './move';
 import { Figure } from './piece';
-import { createGame, createGameFromPosition, IllegalMoveError, updateGame } from './state';
+import { createGame, createGameFromPosition, updateGame } from './state';
 import { viewGame } from './view';
 
 // Initial board
@@ -37,8 +37,8 @@ export const example4 = () => {
 
   const position = [
     { figure: Figure.King, color: Color.Light, square: BoardSquare.D5 },
-    { figure: Figure.Pawn, color: Color.Light, square: BoardSquare.F7 },
     { figure: Figure.King, color: Color.Dark, square: BoardSquare.D8 },
+    { figure: Figure.Pawn, color: Color.Light, square: BoardSquare.F7 },
     { figure: Figure.Pawn, color: Color.Dark, square: BoardSquare.B2 },
   ];
 
@@ -76,8 +76,8 @@ export const example6 = () => {
 
   const position = [
     { figure: Figure.King, color: Color.Light, square: BoardSquare.E1 },
-    { figure: Figure.Pawn, color: Color.Light, square: BoardSquare.E2 },
     { figure: Figure.King, color: Color.Dark, square: BoardSquare.E8 },
+    { figure: Figure.Pawn, color: Color.Light, square: BoardSquare.E2 },
     { figure: Figure.Pawn, color: Color.Dark, square: BoardSquare.F4 },
   ];
 
@@ -100,11 +100,23 @@ export const example6 = () => {
   }
 };
 
+export const example7 = () => {
+  const position = [
+    { figure: Figure.King, color: Color.Light, square: BoardSquare.E1 },
+    { figure: Figure.King, color: Color.Dark, square: BoardSquare.E8 },
+    { figure: Figure.Bishop, color: Color.Dark, square: BoardSquare.A1 },
+  ];
+
+  let game = createGameFromPosition(position, Color.Dark);
+  viewGame(game);
+};
+
 export const runExamples = () => {
   // example1();
   // example2();
   // example3();
   // example4();
   // example5();
-  example6();
+  // example6();
+  example7();
 };

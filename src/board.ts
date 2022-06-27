@@ -144,3 +144,9 @@ export const getSquaresDistance = (a: BoardSquare, b: BoardSquare): number => {
   const [bFile, bRank] = getSquareCoordinates(b);
   return Math.max(Math.abs(aFile - bFile), Math.abs(aRank - bRank));
 };
+
+export const getSquaresDiff = (a: BoardSquare, b: BoardSquare): [number, number] => {
+  const [aFile, aRank] = getSquareCoordinates(a);
+  const [bFile, bRank] = getSquareCoordinates(b);
+  return [bFile - aFile, bRank - aRank];
+};

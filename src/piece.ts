@@ -1,4 +1,4 @@
-import { BoardSquare } from './board';
+import { BoardDirection, BoardSquare } from './board';
 import { Color } from './common';
 
 export enum Figure {
@@ -9,6 +9,8 @@ export enum Figure {
   Knight = 'N',
   Pawn = 'p',
 }
+
+export type PieceId = number;
 
 export interface AbstractPiece {
   figure: Figure;
@@ -26,19 +28,36 @@ export type GamePosition = AbstractPlacedPiece[];
 export interface Piece extends AbstractPiece {
   // figure: Figure;
   // color: Color;
-  id: number;
+  id: PieceId;
 }
 
 export interface PlacedPiece extends AbstractPlacedPiece {
   // figure: Figure;
   // color: Color;
   // square: BoardSquare;
-  id: number;
+  startingSquare: BoardSquare;
+  id: PieceId;
 }
 
 export type AbstractPieceToken = `${Figure}${Color}`;
 
 export type PiecesChecklist = Map<AbstractPieceToken, number>;
+
+export const PAWN_DIRECTION: {
+  [color in Color]: {
+    ahead: BoardDirection;
+    capture: [BoardDirection, BoardDirection];
+  };
+} = {
+  [Color.Light]: {
+    ahead: BoardDirection.Top,
+    capture: [BoardDirection.DiagonalTopLeft, BoardDirection.DiagonalTopRight],
+  },
+  [Color.Dark]: {
+    ahead: BoardDirection.Bottom,
+    capture: [BoardDirection.DiagonalBottomLeft, BoardDirection.DiagonalBottomRight],
+  },
+};
 
 export const getPiecesChecklist = (): PiecesChecklist => {
   return new Map<AbstractPieceToken, number>([
@@ -57,7 +76,7 @@ export const getPiecesChecklist = (): PiecesChecklist => {
   ]);
 };
 
-export const getPieceId = (piece: AbstractPiece): number => {
+export const getPieceId = (piece: AbstractPiece): PieceId => {
   return Math.random();
 };
 

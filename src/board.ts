@@ -1,4 +1,5 @@
 import { Color } from './common';
+import { Move } from './move';
 import { Piece } from './piece';
 
 export type BoardCoordinate = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8;
@@ -15,20 +16,6 @@ export enum BoardFile {
   G = 'G',
   H = 'H',
 }
-
-export enum Castling {
-  KingSide = 'O-O',
-  QueenSide = 'O-O-O',
-}
-
-export interface CastlingSquares {
-  kingFrom: BoardSquare;
-  kingTo: BoardSquare;
-  rookFrom: BoardSquare;
-  rookTo: BoardSquare;
-}
-
-export type CastlingLabel = 'O-O' | 'O-O-O';
 
 export type BoardSquareLabel = `${BoardFile}${BoardCoordinate}`;
 
@@ -150,4 +137,10 @@ export const getToSquare = (
     nextFile as BoardCoordinate,
     nextRank as BoardCoordinate,
   );
+};
+
+export const getSquaresDistance = (a: BoardSquare, b: BoardSquare): number => {
+  const [aFile, aRank] = getSquareCoordinates(a);
+  const [bFile, bRank] = getSquareCoordinates(b);
+  return Math.max(Math.abs(aFile - bFile), Math.abs(aRank - bRank));
 };

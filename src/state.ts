@@ -1,9 +1,9 @@
-import { BoardState, EMPTY_SQUARE, getEmptyBoard } from './board';
+import { BoardState, EMPTY_SQUARE, getEmptyBoard, getToSquare } from './board';
 import { Color, getOppositeColor } from './common';
 import { INITIAL_POSITION } from './initial';
-import { Move, MoveType } from './move';
-import { getCastlingSquares } from './move-castling';
-import { PlacedPiece, Piece, GamePosition, getPiecesChecklist, getPieceToken, getPieceId, getPieceFromToken } from './piece';
+import { createPawnDoubleStepMove, createPawnEnPassantMove, isPawnDoubleStepMove, isPawnEnPassantMove, Move, MoveType } from './move';
+import { CASTLING_SQUARES } from './castling';
+import { PlacedPiece, Piece, GamePosition, getPiecesChecklist, getPieceToken, getPieceId, getPieceFromToken, PAWN_DIRECTION } from './piece';
 import { inCheck } from './check';
 import { isMoveLegal } from './move-legality';
 
@@ -12,6 +12,7 @@ export interface GameState {
   turn: Color;
   inCheck: boolean;
   pieces: PlacedPiece[];
+  lastMove: Move | null;
   capturedPieces: {
     [color in Color]: Piece[];
   };
@@ -29,6 +30,13 @@ export class PieceOwnershipError extends Error {
   constructor(message: string) {
     super(message);
     Object.setPrototypeOf(this, PieceOwnershipError.prototype);
+  }
+}
+
+export class IllegalMoveError extends Error {
+  constructor(message: string) {
+    super(message);
+    Object.setPrototypeOf(this, IllegalMoveError.prototype);
   }
 }
 
@@ -50,9 +58,9 @@ export const createGameFromPosition = (position: GamePosition, turn: Color): Gam
     const id = getPieceId(piece);
     const count = piecesChecklist.get(token) ?? 0;
     piecesChecklist.set(token, count - 1);
-    const boardPiece = { id, figure: piece.figure, color: piece.color };
-    board[piece.square] = boardPiece;
-    pieces.push({ ...boardPiece, square: piece.square });
+    const { figure, color, square } = piece;
+    board[square] = { id, figure, color };
+    pieces.push({ ...board[square], square, startingSquare: square } as PlacedPiece);
   }
 
   for (const [token, count] of Array.from(piecesChecklist)) {
@@ -62,22 +70,40 @@ export const createGameFromPosition = (position: GamePosition, turn: Color): Gam
     capturedPieces[oppositeColor].push(piece);
   }
 
-  const game = { board, turn, inCheck: false, pieces, capturedPieces };
-  game.inCheck = inCheck(board, pieces, turn);
+  return {
+    board,
+    turn,
+    lastMove: null,
+    inCheck: inCheck(board, turn, pieces),
+    pieces,
+    capturedPieces,
+  };
+};
+
+export const forceGame = (game: GameState, move: Move): GameState => {
+  // TODO
   return game;
 };
 
-export const updateGame = (game: GameState, move: Move): GameState => {
+export const updateGame = (game: GameState, _move: Move): GameState => {
 
-  // TODO
+  // Specify pawn move?
+  let move = _move;
+  if (_move.type === MoveType.Basic) {
+    if (isPawnEnPassantMove(game, _move)) {
+      move = createPawnEnPassantMove(_move);
+    } else if (isPawnDoubleStepMove(game, _move)) {
+      move = createPawnDoubleStepMove(_move);
+    }
+  }
+
   if (!isMoveLegal(game, move)) {
-    return game;
+    throw new IllegalMoveError('The move is not legal');
   }
 
   // Castling
   if (move.type === MoveType.Castling) {
-    // TODO: Check castling legality
-    const squares = getCastlingSquares(move.castling, game.turn);
+    const squares = CASTLING_SQUARES[game.turn][move.castling];
     game.board[squares.kingTo] = game.board[squares.kingFrom];
     game.board[squares.kingFrom] = null;
     game.board[squares.rookTo] = game.board[squares.rookFrom];
@@ -94,9 +120,6 @@ export const updateGame = (game: GameState, move: Move): GameState => {
 
   const toPiece = game.board[move.to];
 
-  // TODO: Check king status legality
-  // TODO: Check figure movement legality
-
   // It's not your piece!
   if (fromPiece.color !== game.turn) {
     throw new PieceOwnershipError('You cannot move pieces of your opponent');
@@ -107,19 +130,24 @@ export const updateGame = (game: GameState, move: Move): GameState => {
     game.capturedPieces[game.turn].push(toPiece);
   }
 
+  // En passant?
+  if (move.type === MoveType.PawnEnPassant) {
+    const ghostPawn = getToSquare(move.to, PAWN_DIRECTION[game.turn].ahead, -1);
+    game.board[ghostPawn] = null;
+  }
+
   // Promoting?
   if (move.type === MoveType.Promotion) {
     fromPiece.figure = move.promoteTo;
   }
 
-  // TODO: en passant
-
   // Just move the piece
   game.board[move.from] = EMPTY_SQUARE;
   game.board[move.to] = fromPiece;
 
-  // Update turn
+  // Update turn and last move
   game.turn = getOppositeColor(game.turn);
+  game.lastMove = move;
 
   return { ...game };
 };

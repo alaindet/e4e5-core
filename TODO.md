@@ -7,3 +7,4 @@
 - [ ] Test most functions
 - [ ] Move examples into tests
 - [ ] Fix build
+- [ ] Implement FEN deserializer (https://en.wikipedia.org/wiki/Forsyth%E2%80%93Edwards_Notation)

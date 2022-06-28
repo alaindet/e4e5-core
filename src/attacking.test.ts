@@ -1,6 +1,8 @@
+import { isAttacking } from './attacking';
+
 describe('isAttacking', () => {
   it('asdasdsada', () => {
-    // TODO
+    isAttacking
   });
 });
 

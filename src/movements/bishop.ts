@@ -1,31 +1,29 @@
-import { getSquareCoordinates, BoardCoordinates, getSquareFromCoordinates } from './../board';
-import { getSquareColor, getSquaresDiff } from '../board';
-import { BasicMove } from '../move';
-import { GameState } from '../state';
+import { BoardSquare, BoardState, getSquareCoordinates, getSquareFromCoordinates, getSquaresDiff } from '../board';
+import { PlacedPiece } from '../piece';
 
-export const canBishopMove = (game: GameState, move: BasicMove): boolean => {
+export const canBishopMoveTo = (
+  piece: PlacedPiece,
+  square: BoardSquare,
+  board: BoardState,
+): boolean => {
 
-  if (getSquareColor(move.to) !== getSquareColor(move.from)) {
-    return false;
-  }
-
-  const [fileDiff, rankDiff] = getSquaresDiff(move.from, move.to);
+  const [fileDiff, rankDiff] = getSquaresDiff(piece.square, square);
   const [absFileDiff, absRankDiff] = [Math.abs(fileDiff), Math.abs(rankDiff)];
 
-  // Diagonal movement has equal horizontal and vertical diff
+  // Is it diagonal movement?
   if (absFileDiff !== absRankDiff) {
     return false;
   }
 
+  // Is there something obstructing the way?
   let [fileUnit, rankUnit] = [fileDiff / absFileDiff, rankDiff / absRankDiff];
-  let pos = getSquareCoordinates(move.from);
+  let pos = getSquareCoordinates(piece.square);
 
-  // Is there a piece obstructing the view?
   for (let i = 0; i < absFileDiff - 1; i++) {
     pos[0] += fileUnit;
     pos[1] += rankUnit;
     const square = getSquareFromCoordinates(...pos);
-    if (game.board[square] !== null) {
+    if (board[square] !== null) {
       return false;
     }
   }

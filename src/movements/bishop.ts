@@ -16,10 +16,12 @@ export const canBishopMoveTo = (
   }
 
   // Is there something obstructing the way?
-  let [fileUnit, rankUnit] = [fileDiff / absFileDiff, rankDiff / absRankDiff];
+  const fileUnit = fileDiff === 0 ? 0 : fileDiff / absFileDiff;
+  const rankUnit = rankDiff === 0 ? 0 : rankDiff / absRankDiff;
+  const steps = Math.max(absFileDiff, absRankDiff);
   let pos = getSquareCoordinates(piece.square);
 
-  for (let i = 0; i < absFileDiff - 1; i++) {
+  for (let i = 0; i < steps - 1; i++) {
     pos[0] += fileUnit;
     pos[1] += rankUnit;
     const square = getSquareFromCoordinates(...pos);

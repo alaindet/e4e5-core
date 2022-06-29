@@ -4,4 +4,6 @@ module.exports = {
     testEnvironment: 'node',
     verbose: true,
     automock: false,
+    // Slow down tests, but avoids concurrent access to shared resources
+    maxWorkers: 1,
 }

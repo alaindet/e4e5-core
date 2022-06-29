@@ -1,4 +1,4 @@
-- [ ] Move legality
+- [ ] Add king checker function and add move legality check on updateGame()
 - [x] Special move: Promotion
 - [x] Special move: Castling
 - [x] Special move: En Passant
@@ -6,5 +6,4 @@
 - [x] Add custom errors
 - [ ] Test most functions
 - [ ] Move examples into tests
-- [ ] Fix build
 - [ ] Implement FEN deserializer (https://en.wikipedia.org/wiki/Forsyth%E2%80%93Edwards_Notation)

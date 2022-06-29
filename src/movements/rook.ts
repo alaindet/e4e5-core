@@ -30,5 +30,13 @@ export const canRookMoveTo = (
     }
   }
 
+  // Is last square occupied by a piece of own color?
+  pos[0] += fileUnit;
+  pos[1] += rankUnit;
+  const lastSquare = getSquareFromCoordinates(...pos);
+  if (board[lastSquare]?.color === piece.color) {
+    return false;
+  }
+
   return true;
 };

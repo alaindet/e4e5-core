@@ -7,8 +7,6 @@ export const canKingMoveTo = (
   board: BoardState,
 ): boolean => {
 
-  console.log('canKingMoveTo', piece, square);
-
   // Too far?
   if (getSquaresDistance(piece.square, square) > 1) {
     return false;

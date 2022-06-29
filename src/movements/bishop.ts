@@ -10,7 +10,7 @@ export const canBishopMoveTo = (
   const [fileDiff, rankDiff] = getSquaresDiff(piece.square, square);
   const [absFileDiff, absRankDiff] = [Math.abs(fileDiff), Math.abs(rankDiff)];
 
-  // Is it diagonal movement?
+  // Non-diagonal movement?
   if (absFileDiff !== absRankDiff) {
     return false;
   }
@@ -28,6 +28,14 @@ export const canBishopMoveTo = (
     if (board[square] !== null) {
       return false;
     }
+  }
+
+  // Is last square occupied by a piece of own color?
+  pos[0] += fileUnit;
+  pos[1] += rankUnit;
+  const lastSquare = getSquareFromCoordinates(...pos);
+  if (board[lastSquare]?.color === piece.color) {
+    return false;
   }
 
   return true;

@@ -1,6 +1,6 @@
 import { getOppositeColor } from '../common';
-import { BoardSquare, BoardState, BOARD_MOVEMENT, getSquareCoordinates, BoardCoordinates, getSquareFromCoordinates, BoardCoordinate } from '../board';
-import { PAWN_DIRECTION, PlacedPiece } from '../piece';
+import { BoardSquare, BoardState, getToSquare } from '../board';
+import { getPawnSquares, PlacedPiece } from '../piece';
 
 // Skip en-passant for now
 export const canPawnMoveTo = (
@@ -9,45 +9,36 @@ export const canPawnMoveTo = (
   board: BoardState,
 ): boolean => {
 
-  const dirs = PAWN_DIRECTION[piece.color];
-  const [file, rank] = getSquareCoordinates(piece.square);
-
-  const [aheadFileDiff, aheadRankDiff] = BOARD_MOVEMENT[dirs.ahead];
-  let ahead = [file + aheadFileDiff, rank + aheadRankDiff] as BoardCoordinates;
-  let aheadSquare = getSquareFromCoordinates(...ahead);
+  const dirs = getPawnSquares(piece.color);
+  const ahead = getToSquare(piece.square, dirs.ahead, 1);
 
   // Going ahead?
-  if (aheadSquare === square) {
-    return board[aheadSquare] === null;
+  if (ahead === square) {
+    return board[ahead] === null;
   }
 
-  ahead[0] += aheadFileDiff as BoardCoordinate;
-  ahead[1] += aheadRankDiff as BoardCoordinate;
-  aheadSquare = getSquareFromCoordinates(...ahead);
+  const doubleStep = getToSquare(piece.square, dirs.ahead, 2);
 
   // Double-step ahead?
-  if (aheadSquare === square) {
-    return board[aheadSquare] === null;
+  if (doubleStep === square) {
+    return board[doubleStep] === null;
   }
 
   // Capturing?
-  const diagonalDiffs = dirs.capture.map(d => BOARD_MOVEMENT[d]);
   let foundSquare: BoardSquare | null = null;
-
-  for (const d of diagonalDiffs) {
-    const nextCoords = [file + d[0], rank + d[1]] as BoardCoordinates;
-    const nextSquare = getSquareFromCoordinates(...nextCoords);
-    if (square === nextSquare) {
-      foundSquare = nextSquare;
+  const diagonalSquares = dirs.capture.map(d => getToSquare(piece.square, d, 1));
+  for (const diagonalSquare of diagonalSquares) {
+    if (diagonalSquare === square) {
+      foundSquare = diagonalSquare;
     }
   }
 
-  // You can't go there!
+  // You cannot go there!
   if (foundSquare === null) {
     return false;
   }
 
-  // You can't go there! x2
+  // Capturing own piece?
   if (board[foundSquare]?.color !== getOppositeColor(piece.color)) {
     return false;
   }

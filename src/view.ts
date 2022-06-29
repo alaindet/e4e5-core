@@ -18,43 +18,43 @@ export type ViewSymbols = {
   },
 };
 
-export const VIEW_SYMBOLS: ViewSymbols = {
-  pieces: {
-    [Color.Light]: {
-      [Figure.King]: 'K ',
-      [Figure.Queen]: 'Q ',
-      [Figure.Bishop]: 'B ',
-      [Figure.Knight]: 'N ',
-      [Figure.Rook]: 'R ',
-      [Figure.Pawn]: 'P ',
-    },
-    [Color.Dark]: {
-      [Figure.King]: 'K ',
-      [Figure.Queen]: 'Q ',
-      [Figure.Bishop]: 'B ',
-      [Figure.Knight]: 'N ',
-      [Figure.Rook]: 'R ',
-      [Figure.Pawn]: 'P ',
-    },
-  },
-  textColor: {
-    [Color.Light]: ConsoleColorText.Red,
-    [Color.Dark]: ConsoleColorText.Green,
-  },
-  backgroundColor: {
-    [Color.Light]: ConsoleColorBackground.White,
-    [Color.Dark]: ConsoleColorBackground.Black,
-  },
-};
-
 export const viewGame = (game: GameState): void => {
   const board = renderBoard(game.board);
   console.log(board);
 };
 
-const EMPTY_SQUARE = '  ';
-
 const renderBoard = (board: BoardState): string => {
+
+  const EMPTY_SQUARE = '  ';
+  const VIEW_SYMBOLS: ViewSymbols = {
+    pieces: {
+      [Color.Light]: {
+        [Figure.King]: 'K ',
+        [Figure.Queen]: 'Q ',
+        [Figure.Bishop]: 'B ',
+        [Figure.Knight]: 'N ',
+        [Figure.Rook]: 'R ',
+        [Figure.Pawn]: 'P ',
+      },
+      [Color.Dark]: {
+        [Figure.King]: 'K ',
+        [Figure.Queen]: 'Q ',
+        [Figure.Bishop]: 'B ',
+        [Figure.Knight]: 'N ',
+        [Figure.Rook]: 'R ',
+        [Figure.Pawn]: 'P ',
+      },
+    },
+    textColor: {
+      [Color.Light]: ConsoleColorText.Red,
+      [Color.Dark]: ConsoleColorText.Green,
+    },
+    backgroundColor: {
+      [Color.Light]: ConsoleColorBackground.White,
+      [Color.Dark]: ConsoleColorBackground.Black,
+    },
+  };
+
   return [
     ['_8', B.A8, B.B8, B.C8, B.D8, B.E8, B.F8, B.G8, B.H8],
     ['_7', B.A7, B.B7, B.C7, B.D7, B.E7, B.F7, B.G7, B.H7],

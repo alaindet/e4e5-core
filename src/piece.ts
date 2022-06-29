@@ -43,20 +43,21 @@ export type AbstractPieceToken = `${Figure}${Color}`;
 
 export type PiecesChecklist = Map<AbstractPieceToken, number>;
 
-export const PAWN_DIRECTION: {
-  [color in Color]: {
-    ahead: BoardDirection;
-    capture: [BoardDirection, BoardDirection];
-  };
-} = {
-  [Color.Light]: {
-    ahead: BoardDirection.Top,
-    capture: [BoardDirection.DiagonalTopLeft, BoardDirection.DiagonalTopRight],
-  },
-  [Color.Dark]: {
+export const getPawnSquares = (color: Color): {
+  ahead: BoardDirection;
+  capture: [BoardDirection, BoardDirection];
+} => {
+  if (color === Color.Light) {
+    return {
+      ahead: BoardDirection.Top,
+      capture: [BoardDirection.DiagonalTopLeft, BoardDirection.DiagonalTopRight],
+    };
+  }
+
+  return {
     ahead: BoardDirection.Bottom,
     capture: [BoardDirection.DiagonalBottomLeft, BoardDirection.DiagonalBottomRight],
-  },
+  };
 };
 
 export const getPiecesChecklist = (): PiecesChecklist => {

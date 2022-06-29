@@ -1,6 +1,6 @@
 import { BoardSquare, BoardSquareLabel, getSquaresDistance, getToSquare } from './board';
 import { Castling, CastlingLabel } from './castling';
-import { Figure, PAWN_DIRECTION } from './piece';
+import { Figure, getPawnSquares } from './piece';
 import { GameState } from './state';
 
 export enum MoveType {
@@ -55,7 +55,7 @@ export const isPawnEnPassantMove = (game: GameState, move: BasicMove): boolean =
     game.lastMove.type === MoveType.PawnDoubleStep &&
     getSquaresDistance(game.lastMove.to, move.from) === 1 &&
     game.board[move.to] === null &&
-    move.to === getToSquare(game.lastMove.to, PAWN_DIRECTION[game.turn].ahead, 1)
+    move.to === getToSquare(game.lastMove.to, getPawnSquares(game.turn).ahead, 1)
   );
 };
 

@@ -18,43 +18,48 @@ export interface CastlingSquares {
 
 export type CastlingLabel = 'O-O' | 'O-O-O';
 
-export const CASTLING_SQUARES: {
-  [color in Color]: {
-    [side in Castling]: CastlingSquares;
-  }
-} = {
-  [Color.Light]: {
-    [Castling.KingSide]: {
+export const getCastlingSquares = (
+  color: Color,
+  castling: Castling,
+): CastlingSquares => {
+  if (color === Color.Light && castling === Castling.KingSide) {
+    return {
       kingFrom: BoardSquare.E1,
       rookFrom: BoardSquare.H1,
       kingTo: BoardSquare.G1,
       rookTo: BoardSquare.F1,
       inBetween: [BoardSquare.F1, BoardSquare.G1],
-    },
-    [Castling.QueenSide]: {
+    };
+  }
+
+  if (color === Color.Light && castling === Castling.QueenSide) {
+    return {
       kingFrom: BoardSquare.E1,
       rookFrom: BoardSquare.A1,
       kingTo: BoardSquare.C1,
       rookTo: BoardSquare.D1,
       inBetween: [BoardSquare.D1, BoardSquare.C1, BoardSquare.B1],
-    },
-  },
-  [Color.Dark]: {
-    [Castling.KingSide]: {
+    };
+  }
+
+  if (color === Color.Dark && castling === Castling.KingSide) {
+    return {
       kingFrom: BoardSquare.E8,
       rookFrom: BoardSquare.H8,
       kingTo: BoardSquare.G8,
       rookTo: BoardSquare.F8,
       inBetween: [BoardSquare.F8, BoardSquare.G8],
-    },
-    [Castling.QueenSide]: {
-      kingFrom: BoardSquare.E8,
-      rookFrom: BoardSquare.A8,
-      kingTo: BoardSquare.C8,
-      rookTo: BoardSquare.D8,
-      inBetween: [BoardSquare.D8, BoardSquare.C8, BoardSquare.B8],
-    },
-  },
+    };
+  }
+
+  // Color dark, castling queen-side
+  return {
+    kingFrom: BoardSquare.E8,
+    rookFrom: BoardSquare.A8,
+    kingTo: BoardSquare.C8,
+    rookTo: BoardSquare.D8,
+    inBetween: [BoardSquare.D8, BoardSquare.C8, BoardSquare.B8],
+  };
 };
 
 export const isCastlingLegal = (game: GameState, castling: Castling): boolean => {
@@ -63,7 +68,7 @@ export const isCastlingLegal = (game: GameState, castling: Castling): boolean =>
     return false;
   }
 
-  const squares = CASTLING_SQUARES[game.turn][castling];
+  const squares = getCastlingSquares(game.turn, castling);
 
   let king: PlacedPiece | null = null;
   let rook: PlacedPiece | null = null;

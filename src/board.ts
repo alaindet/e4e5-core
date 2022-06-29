@@ -51,43 +51,6 @@ export class NoSquareFoundError extends Error {
   }
 }
 
-export const BOARD_MOVEMENT: { [dir in BoardDirection]: [number, number] } = {
-  [BoardDirection.Top]: [0, 1],
-  [BoardDirection.Right]: [1, 0],
-  [BoardDirection.Bottom]: [0, -1],
-  [BoardDirection.Left]: [-1, 0],
-  [BoardDirection.DiagonalTopRight]: [1, 1],
-  [BoardDirection.DiagonalBottomRight]: [1, -1],
-  [BoardDirection.DiagonalTopLeft]: [-1, 1],
-  [BoardDirection.DiagonalBottomLeft]: [-1, -1],
-};
-
-export const BOARD_FILE_TO_COORDINATE: { [file in BoardFile]: BoardCoordinate } = {
-  [BoardFile.A]: 1,
-  [BoardFile.B]: 2,
-  [BoardFile.C]: 3,
-  [BoardFile.D]: 4,
-  [BoardFile.E]: 5,
-  [BoardFile.F]: 6,
-  [BoardFile.G]: 7,
-  [BoardFile.H]: 8,
-};
-
-export const BOARD_COORDINATE_TO_FILE: { [c in BoardCoordinate]: BoardFile} = {
-  1: BoardFile.A,
-  2: BoardFile.B,
-  3: BoardFile.C,
-  4: BoardFile.D,
-  5: BoardFile.E,
-  6: BoardFile.F,
-  7: BoardFile.G,
-  8: BoardFile.H,
-};
-
-export const EMPTY_SQUARE = null;
-export const MIN_BOARD_COORDINATE = 1;
-export const MAX_BOARD_COORDINATE = 8;
-
 export const getEmptyBoard = (): BoardState => {
   return Object.values(BoardSquare).reduce((board, square) => {
     board[square] = null;
@@ -96,16 +59,19 @@ export const getEmptyBoard = (): BoardState => {
 };
 
 export const getSquareCoordinates = (square: BoardSquare): BoardCoordinates => {
-  const file = BOARD_FILE_TO_COORDINATE[square[0] as BoardFile];
+  // In UTF-16 => A = 65, B = 66, ..., H = 72
+  const file = square[0].charCodeAt(0) - 64 as BoardCoordinate;
   const rank = +square[1];
   return [file, rank as BoardCoordinate];
 };
 
 export const getSquareFromCoordinates = (
-  file: BoardCoordinate,
+  _file: BoardCoordinate,
   rank: BoardCoordinate,
 ): BoardSquare => {
-  return `${BOARD_COORDINATE_TO_FILE[file]}${rank}` as BoardSquare;
+  // In UTF-16 => A = 65, B = 66, ..., H = 72
+  const file = String.fromCharCode(_file + 64);
+  return `${file}${rank}` as BoardSquare;
 };
 
 // Ex.: 'B3' => 2 + 5 is odd => light square
@@ -120,21 +86,27 @@ export const getToSquare = (
   amount = 1,
 ): BoardSquare => {
 
-  if (Math.abs(amount) > MAX_BOARD_COORDINATE - 1) {
+  if (Math.abs(amount) > 8 - 1) {
     throw new NoSquareFoundError(`You cannot move by ${amount} squares`);
   }
+
+  const BOARD_MOVEMENT: { [dir in BoardDirection]: [number, number] } = {
+    [BoardDirection.Top]: [0, 1],
+    [BoardDirection.Right]: [1, 0],
+    [BoardDirection.Bottom]: [0, -1],
+    [BoardDirection.Left]: [-1, 0],
+    [BoardDirection.DiagonalTopRight]: [1, 1],
+    [BoardDirection.DiagonalBottomRight]: [1, -1],
+    [BoardDirection.DiagonalTopLeft]: [-1, 1],
+    [BoardDirection.DiagonalBottomLeft]: [-1, -1],
+  };
 
   const [file, rank] = getSquareCoordinates(square);
   let [fileDiff, rankDiff] = BOARD_MOVEMENT[dir];
   const nextFile = file + fileDiff * amount;
   const nextRank = rank + rankDiff * amount;
 
-  if (
-    nextFile < MIN_BOARD_COORDINATE ||
-    nextFile > MAX_BOARD_COORDINATE ||
-    nextRank < MIN_BOARD_COORDINATE ||
-    nextRank > MAX_BOARD_COORDINATE
-  ) {
+  if (nextFile < 1 || nextFile > 8 || nextRank < 1 || nextRank > 8) {
     throw new NoSquareFoundError('Square not found');
   }
 

@@ -1,9 +1,9 @@
-import { BoardState, EMPTY_SQUARE, getEmptyBoard, getToSquare } from './board';
+import { BoardState, getEmptyBoard, getToSquare } from './board';
 import { Color, getOppositeColor } from './common';
-import { INITIAL_POSITION } from './initial';
+import { getInitialPosition } from './initial';
 import { createPawnDoubleStepMove, createPawnEnPassantMove, isPawnDoubleStepMove, isPawnEnPassantMove, Move, MoveType } from './move';
-import { CASTLING_SQUARES } from './castling';
-import { PlacedPiece, Piece, GamePosition, getPiecesChecklist, getPieceToken, getPieceId, getPieceFromToken, PAWN_DIRECTION } from './piece';
+import { getCastlingSquares } from './castling';
+import { PlacedPiece, Piece, GamePosition, getPiecesChecklist, getPieceToken, getPieceId, getPieceFromToken, getPawnSquares } from './piece';
 
 export interface GameState {
   board: BoardState;
@@ -40,7 +40,7 @@ export class IllegalMoveError extends Error {
 }
 
 export const createGame = (): GameState => {
-  return createGameFromPosition(INITIAL_POSITION, Color.Light);
+  return createGameFromPosition(getInitialPosition(), Color.Light);
 };
 
 // TODO: Validate position?
@@ -102,7 +102,7 @@ export const updateGame = (game: GameState, _move: Move): GameState => {
 
   // Castling
   if (move.type === MoveType.Castling) {
-    const squares = CASTLING_SQUARES[game.turn][move.castling];
+    const squares = getCastlingSquares(game.turn, move.castling);
     game.board[squares.kingTo] = game.board[squares.kingFrom];
     game.board[squares.kingFrom] = null;
     game.board[squares.rookTo] = game.board[squares.rookFrom];
@@ -113,7 +113,7 @@ export const updateGame = (game: GameState, _move: Move): GameState => {
   const fromPiece = game.board[move.from];
 
   // No piece to move!
-  if (fromPiece === EMPTY_SQUARE) {
+  if (fromPiece === null) {
     throw new NoPieceFoundError(`No piece found on square ${move.from}`);
   }
 
@@ -125,13 +125,13 @@ export const updateGame = (game: GameState, _move: Move): GameState => {
   }
 
   // Capturing?
-  if (toPiece !== EMPTY_SQUARE) {
+  if (toPiece !== null) {
     game.capturedPieces[game.turn].push(toPiece);
   }
 
   // En passant?
   if (move.type === MoveType.PawnEnPassant) {
-    const ghostPawn = getToSquare(move.to, PAWN_DIRECTION[game.turn].ahead, -1);
+    const ghostPawn = getToSquare(move.to, getPawnSquares(game.turn).ahead, -1);
     game.board[ghostPawn] = null;
   }
 
@@ -141,7 +141,7 @@ export const updateGame = (game: GameState, _move: Move): GameState => {
   }
 
   // Just move the piece
-  game.board[move.from] = EMPTY_SQUARE;
+  game.board[move.from] = null;
   game.board[move.to] = fromPiece;
 
   // Update turn and last move

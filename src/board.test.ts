@@ -108,7 +108,7 @@ describe('Chessboard utils', () => {
     });
   });
 
-  it('should calculate the difference in coordinate between two squares', () => {
+  it('should calculate the difference in coordinates between two squares', () => {
     const testCases: [[BoardSquare, BoardSquare], [number, number]][] = [
       [[BoardSquare.A1, BoardSquare.H8], [7, 7]],
       [[BoardSquare.H8, BoardSquare.A1], [-7, -7]],

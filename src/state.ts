@@ -31,7 +31,7 @@ export class PieceOwnershipError extends Error {
   }
 }
 
-// TODO: Move away...
+// TODO: Move this in another file
 export class IllegalMoveError extends Error {
   constructor(message: string) {
     super(message);
@@ -85,7 +85,7 @@ export const createGameFromPosition = (
 
 export const updateGame = (game: GameState, _move: Move): GameState => {
 
-  // Specify pawn move?
+  // Specify pawn move
   let move = _move;
   if (_move.type === MoveType.Basic) {
     if (isPawnEnPassantMove(game, _move)) {

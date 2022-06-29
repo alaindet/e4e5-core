@@ -92,7 +92,7 @@ export const isCastlingLegal = (game: GameState, castling: Castling): boolean =>
     }
   }
 
-  // TODO: Should not transit on attacked square
+  // TODO: Should not transit on attacked squares
   // ...
 
   // There should be a king and a rook with no previous movements

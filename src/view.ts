@@ -49,7 +49,6 @@ export const VIEW_SYMBOLS: ViewSymbols = {
 
 export const viewGame = (game: GameState): void => {
   const board = renderBoard(game.board);
-  // TODO...
   console.log(board);
 };
 

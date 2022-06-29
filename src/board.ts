@@ -85,7 +85,8 @@ export const BOARD_COORDINATE_TO_FILE: { [c in BoardCoordinate]: BoardFile} = {
 };
 
 export const EMPTY_SQUARE = null;
-export const MAX_BOARD_SIDE = 8;
+export const MIN_BOARD_COORDINATE = 1;
+export const MAX_BOARD_COORDINATE = 8;
 
 export const getEmptyBoard = (): BoardState => {
   return Object.values(BoardSquare).reduce((board, square) => {
@@ -119,7 +120,7 @@ export const getToSquare = (
   amount = 1,
 ): BoardSquare => {
 
-  if (Math.abs(amount) > MAX_BOARD_SIDE - 1) {
+  if (Math.abs(amount) > MAX_BOARD_COORDINATE - 1) {
     throw new NoSquareFoundError(`You cannot move by ${amount} squares`);
   }
 
@@ -128,8 +129,13 @@ export const getToSquare = (
   const nextFile = file + fileDiff * amount;
   const nextRank = rank + rankDiff * amount;
 
-  if (nextFile > MAX_BOARD_SIDE || nextRank > MAX_BOARD_SIDE) {
-    throw new NoSquareFoundError(`Square not found`);
+  if (
+    nextFile < MIN_BOARD_COORDINATE ||
+    nextFile > MAX_BOARD_COORDINATE ||
+    nextRank < MIN_BOARD_COORDINATE ||
+    nextRank > MAX_BOARD_COORDINATE
+  ) {
+    throw new NoSquareFoundError('Square not found');
   }
 
   return getSquareFromCoordinates(

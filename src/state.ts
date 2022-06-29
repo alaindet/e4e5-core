@@ -4,8 +4,6 @@ import { INITIAL_POSITION } from './initial';
 import { createPawnDoubleStepMove, createPawnEnPassantMove, isPawnDoubleStepMove, isPawnEnPassantMove, Move, MoveType } from './move';
 import { CASTLING_SQUARES } from './castling';
 import { PlacedPiece, Piece, GamePosition, getPiecesChecklist, getPieceToken, getPieceId, getPieceFromToken, PAWN_DIRECTION } from './piece';
-import { inCheck } from './check';
-import { isMoveLegal } from './move-legality';
 
 export interface GameState {
   board: BoardState;
@@ -33,6 +31,7 @@ export class PieceOwnershipError extends Error {
   }
 }
 
+// TODO: Move away...
 export class IllegalMoveError extends Error {
   constructor(message: string) {
     super(message);
@@ -78,15 +77,10 @@ export const createGameFromPosition = (
     board,
     turn,
     lastMove: null,
-    inCheck: inCheck(board, turn, pieces),
+    inCheck: false, // TODO: Check status,
     pieces,
     capturedPieces,
   };
-};
-
-export const forceGame = (game: GameState, move: Move): GameState => {
-  // TODO
-  return game;
 };
 
 export const updateGame = (game: GameState, _move: Move): GameState => {
@@ -101,9 +95,10 @@ export const updateGame = (game: GameState, _move: Move): GameState => {
     }
   }
 
-  if (!isMoveLegal(game, move)) {
-    throw new IllegalMoveError('The move is not legal');
-  }
+  // TODO: Check move legality
+  // if (!isMoveLegal(game, move)) {
+  //   throw new IllegalMoveError('The move is not legal');
+  // }
 
   // Castling
   if (move.type === MoveType.Castling) {

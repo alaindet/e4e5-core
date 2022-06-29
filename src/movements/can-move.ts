@@ -1,5 +1,5 @@
-import { BoardSquare, BoardState } from '../board';
 import { Figure, PlacedPiece } from '../piece';
+import { BoardSquare, BoardState } from '../board';
 import { canBishopMoveTo } from './bishop';
 import { canKingMoveTo } from './king';
 import { canKnightMoveTo } from './knight';

@@ -1,9 +1,10 @@
 import { assertBoardState } from './utils';
 import { createMove, Move } from '../move';
-import { createGame, createGameFromPosition, IllegalMoveError, updateGame } from '../state';
+import { createGame, createGameFromPosition, updateGame } from '../state';
 import { BoardSquare } from '../board';
 import { Figure } from '../piece';
 import { Color } from '../common';
+import { getPositionFromView } from '../view';
 
 describe('Castling', () => {
 
@@ -28,11 +29,16 @@ describe('Castling', () => {
 
   it('should perform queen-side castling for dark', () => {
 
-    const position = [
-      { figure: Figure.King, color: Color.Dark, square: BoardSquare.E8 },
-      { figure: Figure.Rook, color: Color.Dark, square: BoardSquare.A8 },
-      { figure: Figure.King, color: Color.Light, square: BoardSquare.F3 },
-    ];
+    const position = getPositionFromView(`
+      |r| | | |k| | | |
+      | | | | | | | | |
+      | | | | | | | | |
+      | | | | | | | | |
+      | | | | | | | | |
+      | | | | | |K| | |
+      | | | | | | | | |
+      | | | | | | | | |
+    `);
 
     const moves: Move[] = [
       createMove('F3', 'G4'), createMove('O-O-O'),

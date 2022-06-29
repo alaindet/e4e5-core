@@ -1,17 +1,20 @@
 import { Color } from '../common';
-import { AbstractPlacedPiece, Figure, PlacedPiece } from '../piece';
+import { GamePosition, PlacedPiece } from '../piece';
 import { BoardSquare } from '../board';
 import { createGameFromPosition } from '../state';
 import { canMoveTo } from './can-move';
+import { getPositionFromView } from '../view';
 
-const testPosition: AbstractPlacedPiece[] = [
-  { figure: Figure.King, color: Color.Light, square: BoardSquare.F1 },
-  { figure: Figure.Pawn, color: Color.Light, square: BoardSquare.H3 },
-  { figure: Figure.Pawn, color: Color.Light, square: BoardSquare.G4 },
-  { figure: Figure.King, color: Color.Dark, square: BoardSquare.C6 },
-  { figure: Figure.Queen, color: Color.Dark, square: BoardSquare.D4 },
-  { figure: Figure.Knight, color: Color.Dark, square: BoardSquare.D5 },
-];
+const testPosition: GamePosition = getPositionFromView(`
+  | | | | | | | | |
+  | | | | | | | | |
+  | | |k| | | | | |
+  | | | |n| | | | |
+  | | | |q| | |P| |
+  | | | | | | | |P|
+  | | | | | | | | |
+  | | | | | |K| | |
+`);
 
 const testCases: [BoardSquare, boolean][] = [
   [BoardSquare.A4, true],

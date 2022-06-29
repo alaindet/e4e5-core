@@ -1,4 +1,4 @@
-import { BoardSquare, BoardState, getSquareCoordinates, getSquaresDiff } from '../board';
+import { BoardSquare, BoardState, getSquaresDiff } from '../board';
 import { PlacedPiece } from '../piece';
 
 // Short L movement example: A1 => B3

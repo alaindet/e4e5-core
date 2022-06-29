@@ -1,5 +1,4 @@
 import { Color } from './common';
-import { Move } from './move';
 import { Piece } from './piece';
 
 export type BoardCoordinate = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8;

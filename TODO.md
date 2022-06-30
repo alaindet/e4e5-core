@@ -15,6 +15,7 @@
 - [ ] Validate win conditions
 - [ ] Validate checkmate
 - [ ] Change game state based on FEN information https://en.wikipedia.org/wiki/Forsyth%E2%80%93Edwards_Notation
+- [ ] Add FEN serialization
 - [ ] Add history to game state
 - [ ] Convert Color Enum to Color { White = 'w', Black = 'b' }
 - [ ] Use PieceLetter into viewGame()

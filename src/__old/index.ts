@@ -1,5 +1,6 @@
-import { createGameFromPosition } from './state';
-import { getPositionFromView, viewGame } from './view';
+import { createGameFromPosition } from '../state';
+import { viewGame } from '../view';
+import { fromPlainGrid } from '../serialization/plain-grid';
 
 const view = `
   |r|n|b|q|k|b|n|r|
@@ -12,6 +13,6 @@ const view = `
   |R|N|B|Q|K|B|N|R|
 `;
 
-const pos = getPositionFromView(view);
+const pos = fromPlainGrid(view);
 const game = createGameFromPosition(pos);
 viewGame(game);

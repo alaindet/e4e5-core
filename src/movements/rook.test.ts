@@ -2,10 +2,10 @@ import { Color } from '../common';
 import { GamePosition, PlacedPiece } from '../piece';
 import { BoardSquare } from '../board';
 import { createGameFromPosition } from '../state';
+import { fromPlainGrid } from '../serialization/plain-grid';
 import { canMoveTo } from './can-move';
-import { getPositionFromView } from '../view';
 
-const testPosition: GamePosition = getPositionFromView(`
+const testPosition: GamePosition = fromPlainGrid(`
   | | | | | | | | |
   | | | | | | | | |
   | | | | | | | | |

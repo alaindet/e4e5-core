@@ -1,16 +1,16 @@
 import { createGameFromPosition } from './state';
 import { Color } from './common';
 import { inCheck } from './check';
-import { getPositionFromView } from './view';
+import { fromPlainGrid } from './serialization/plain-grid';
 
 const assertInCheck = (color: Color, positionView: string) => {
-  const position = getPositionFromView(positionView);
+  const position = fromPlainGrid(positionView);
   const game = createGameFromPosition(position, color);
   expect(inCheck(game)).toBe(true);
 };
 
 const assertNotInCheck = (color: Color, positionView: string) => {
-  const position = getPositionFromView(positionView);
+  const position = fromPlainGrid(positionView);
   const game = createGameFromPosition(position, color);
   expect(inCheck(game)).toBe(false);
 };

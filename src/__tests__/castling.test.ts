@@ -4,7 +4,7 @@ import { createGame, createGameFromPosition, updateGame } from '../state';
 import { BoardSquare } from '../board';
 import { Figure } from '../piece';
 import { Color } from '../common';
-import { getPositionFromView } from '../view';
+import { fromPlainGrid } from '../serialization/plain-grid';
 
 describe('Castling', () => {
 
@@ -29,7 +29,7 @@ describe('Castling', () => {
 
   it('should perform queen-side castling for dark', () => {
 
-    const position = getPositionFromView(`
+    const position = fromPlainGrid(`
       |r| | | |k| | | |
       | | | | | | | | |
       | | | | | | | | |

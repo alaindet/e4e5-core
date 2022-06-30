@@ -3,7 +3,7 @@ import { Color } from '../common';
 import { createMove } from '../move';
 import { Figure } from '../piece';
 import { createGame, createGameFromPosition, updateGame } from '../state';
-import { viewGame } from '../view';
+import { viewGame } from '../serialization/view';
 
 // Initial board
 export const example1 = () => {

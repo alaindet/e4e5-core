@@ -1,8 +1,8 @@
-import { BoardSquare as B, BoardSquare, BoardState, getSquareColor } from './board';
-import { Color } from './common';
-import { Figure } from './piece';
-import { GameState } from './state';
-import { ConsoleColorBackground, ConsoleColorText, logWithColor } from './view-console';
+import { BoardSquare as B, BoardSquare, BoardState, getSquareColor } from '../board';
+import { Color } from '../common';
+import { Figure } from '../piece';
+import { GameState } from '../state';
+import { ConsoleColorBackground, ConsoleColorText, logWithColor } from './console';
 
 export type ViewSymbols = {
   pieces: {
@@ -18,12 +18,7 @@ export type ViewSymbols = {
   },
 };
 
-export const viewGame = (game: GameState): void => {
-  const board = renderBoard(game.board);
-  console.log(board);
-};
-
-export const renderBoard = (board: BoardState): string => {
+const renderBoard = (board: BoardState): string => {
 
   const EMPTY_SQUARE = '  ';
   const VIEW_SYMBOLS: ViewSymbols = {
@@ -93,4 +88,9 @@ export const renderBoard = (board: BoardState): string => {
     }).join('');
   })
   .join('\n');
+};
+
+export const viewGame = (game: GameState): void => {
+  const board = renderBoard(game.board);
+  console.log(board);
 };

@@ -3,7 +3,7 @@ import { getInitialPosition } from '../initial';
 import { fromPlainGrid } from './plain-grid';
 
 describe('Plain Grid serialization', () => {
-  it('should deserialization from plain grid format', () => {
+  it('should deserialize starting position from plain grid format', () => {
 
     const flatten = (p: AbstractPlacedPiece): string => {
       return `${p.square}${p.color}${p.figure}`;

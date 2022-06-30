@@ -5,9 +5,18 @@
 - [ ] Serialization/deserialization in common formats
 - [x] Add custom errors
 - [ ] Move examples into tests
-- [ ] Implement FEN deserializer (https://en.wikipedia.org/wiki/Forsyth%E2%80%93Edwards_Notation)
+- [x] Implement FEN deserializer (https://en.wikipedia.org/wiki/Forsyth%E2%80%93Edwards_Notation)
 - [ ] https://cameronnokes.com/blog/the-30-second-guide-to-publishing-a-typescript-package-to-npm/
 - [ ] doc
 - [ ] ESLint
 - [ ] Husky
 - [ ] Rename "plain grid"?
+- [ ] Adjust import paths with @/*
+- [ ] Validate win conditions
+- [ ] Validate checkmate
+- [ ] Change game state based on FEN information https://en.wikipedia.org/wiki/Forsyth%E2%80%93Edwards_Notation
+- [ ] Add history to game state
+- [ ] Convert Color Enum to Color { White = 'w', Black = 'b' }
+- [ ] Use PieceLetter into viewGame()
+- [x] Move viewGame() into serialization
+- [ ] Update README.md

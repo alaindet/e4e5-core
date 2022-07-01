@@ -1,7 +1,7 @@
 import { Color } from '../common';
 import { GamePosition, PlacedPiece } from '../piece';
 import { BoardSquare } from '../board';
-import { createGameFromPosition } from '../state';
+import { createGameFromPosition } from '../state/state';
 import { fromPlainGrid } from '../serialization/plain-grid';
 import { canMoveTo } from './can-move';
 
@@ -35,7 +35,8 @@ describe('Validate knight movements', () => {
   it('should validate movement based on position', () => {
     testCases.forEach(({ input, expected }) => {
       const [color, fromSquare, toSquare] = input;
-      let game = createGameFromPosition(testPosition, color);
+      let game = createGameFromPosition(testPosition);
+      game.turn = color;
       const knight = { ...game.board[fromSquare], square: fromSquare } as PlacedPiece;
       const result = canMoveTo(knight, toSquare, game.board);
       expect(result).toBe(expected);

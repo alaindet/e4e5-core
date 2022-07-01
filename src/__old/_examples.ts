@@ -2,7 +2,7 @@ import { BoardDirection, BoardSquare, getToSquare } from '../board';
 import { Color } from '../common';
 import { createMove } from '../move';
 import { Figure } from '../piece';
-import { createGame, createGameFromPosition, updateGame } from '../state';
+import { createGame, createGameFromPosition, updateGame } from '../state/state';
 import { viewGame } from '../serialization/view';
 
 // Initial board

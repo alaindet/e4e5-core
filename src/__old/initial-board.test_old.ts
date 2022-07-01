@@ -2,7 +2,7 @@ import { BoardSquare } from '../board';
 import { Color } from '../common';
 import { createMove } from '../move';
 import { Figure } from '../piece';
-import { createGame, updateGame } from '../state';
+import { createGame, updateGame } from '../state/state';
 import { assertBoardState } from '../utils/assert-board-state';
 
 describe('Game basics', () => {
@@ -13,7 +13,6 @@ describe('Game basics', () => {
     expect(game.capturedPieces[Color.White].length).toBe(0);
     expect(game.capturedPieces[Color.Black].length).toBe(0);
     expect(game.inCheck).toBe(false);
-    expect(game.lastMove).toBeNull();
     expect(game.turn).toBe(Color.White);
 
     // Sample some squares, avoid testing all

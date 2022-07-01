@@ -1,7 +1,7 @@
 import { Color } from '../common';
 import { GamePosition, PlacedPiece } from '../piece';
 import { BoardSquare } from '../board';
-import { createGameFromPosition } from '../state';
+import { createGameFromPosition } from '../state/state';
 import { fromPlainGrid } from '../serialization/plain-grid';
 import { canMoveTo } from './can-move';
 
@@ -25,7 +25,8 @@ const testCases: [BoardSquare, boolean][] = [
 
 describe('Validate king movements', () => {
   it('should validate movement based on position', () => {
-    let game = createGameFromPosition(testPosition, Color.Black);
+    let game = createGameFromPosition(testPosition);
+    game.turn = Color.Black;
     const fromSquare = BoardSquare.E5;
     const king = { ...game.board[fromSquare], square: fromSquare } as PlacedPiece;
     testCases.forEach(([square, expected]) => {

@@ -1,6 +1,6 @@
 import { assertBoardState } from '../utils/assert-board-state';
 import { createMove, Move } from '../move';
-import { createGame, createGameFromPosition, updateGame } from '../state';
+import { createGame, createGameFromPosition, updateGame } from '../state/state';
 import { BoardSquare } from '../board';
 import { Figure } from '../piece';
 import { Color } from '../common';

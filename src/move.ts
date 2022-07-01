@@ -49,35 +49,35 @@ export type Move = (
   | PawnDoubleStepMove
 );
 
-export const isPawnEnPassantMove = (game: GameState, move: BasicMove): boolean => {
-  return (
-    game.lastMove !== null &&
-    game.lastMove.type === MoveType.PawnDoubleStep &&
-    getSquaresDistance(game.lastMove.to, move.from) === 1 &&
-    game.board[move.to] === null &&
-    move.to === getToSquare(game.lastMove.to, getPawnSquares(game.turn).ahead, 1)
-  );
-};
+// export const isPawnEnPassantMove = (game: GameState, move: BasicMove): boolean => {
+//   return (
+//     game.lastMove !== null &&
+//     game.lastMove.type === MoveType.PawnDoubleStep &&
+//     getSquaresDistance(game.lastMove.to, move.from) === 1 &&
+//     game.board[move.to] === null &&
+//     move.to === getToSquare(game.lastMove.to, getPawnSquares(game.turn).ahead, 1)
+//   );
+// };
 
-export const createPawnEnPassantMove = (move: BasicMove): PawnEnPassantMove => ({
-  type: MoveType.PawnEnPassant,
-  from: move.from,
-  to: move.to,
-});
+// export const createPawnEnPassantMove = (move: BasicMove): PawnEnPassantMove => ({
+//   type: MoveType.PawnEnPassant,
+//   from: move.from,
+//   to: move.to,
+// });
 
-export const isPawnDoubleStepMove = (game: GameState, move: BasicMove): boolean => {
-  return (
-    game.board[move.from]?.figure === Figure.Pawn &&
-    game.board[move.to] === null &&
-    getSquaresDistance(move.from, move.to) === 2
-  )
-};
+// export const isPawnDoubleStepMove = (game: GameState, move: BasicMove): boolean => {
+//   return (
+//     game.board[move.from]?.figure === Figure.Pawn &&
+//     game.board[move.to] === null &&
+//     getSquaresDistance(move.from, move.to) === 2
+//   )
+// };
 
-export const createPawnDoubleStepMove = (move: BasicMove): PawnDoubleStepMove => ({
-  type: MoveType.PawnDoubleStep,
-  from: move.from,
-  to: move.to,
-});
+// export const createPawnDoubleStepMove = (move: BasicMove): PawnDoubleStepMove => ({
+//   type: MoveType.PawnDoubleStep,
+//   from: move.from,
+//   to: move.to,
+// });
 
 export const createMove = (
   fromSquare: BoardSquareLabel | CastlingLabel,

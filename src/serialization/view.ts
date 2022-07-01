@@ -1,7 +1,7 @@
 import { BoardSquare as B, BoardSquare, BoardState, getSquareColor } from '../board';
 import { Color } from '../common';
 import { Figure } from '../piece';
-import { GameState } from '../state';
+import { GameState } from '../state/state';
 import { ConsoleColorBackground, ConsoleColorText, logWithColor } from './console';
 
 export type ViewSymbols = {

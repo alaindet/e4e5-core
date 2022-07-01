@@ -18,7 +18,7 @@ const assertNotInCheck = (color: Color, positionView: string) => {
 describe('Validate king check status', () => {
 
   it('light king checked by dark queen', () => {
-    assertInCheck(Color.Dark, `
+    assertInCheck(Color.Black, `
       | | | | | | | | |
       | | | | | | | | |
       | | | | | | | | |
@@ -31,7 +31,7 @@ describe('Validate king check status', () => {
   });
 
   it('light king checked by dark knight', () => {
-    assertInCheck(Color.Dark, `
+    assertInCheck(Color.Black, `
       | | | | | | | | |
       | | | | | | | | |
       | | | | | | | | |
@@ -44,7 +44,7 @@ describe('Validate king check status', () => {
   });
 
   it('light king checked by dark pawn', () => {
-    assertInCheck(Color.Dark, `
+    assertInCheck(Color.Black, `
       | | | | | | | | |
       | | | | | | | | |
       | | | | | | | | |
@@ -57,7 +57,7 @@ describe('Validate king check status', () => {
   });
 
   it('light king is safe', () => {
-    assertNotInCheck(Color.Dark, `
+    assertNotInCheck(Color.Black, `
       | | | | | | | | |
       | | | | | | | |b|
       | | | | | | | | |
@@ -70,7 +70,7 @@ describe('Validate king check status', () => {
   });
 
   it('dark king checked by light rook', () => {
-    assertInCheck(Color.Light, `
+    assertInCheck(Color.White, `
       | | | | | | | | |
       | | | | | | | | |
       | | | | | | | | |
@@ -83,7 +83,7 @@ describe('Validate king check status', () => {
   });
 
   it('dark king checked by light pawn', () => {
-    assertInCheck(Color.Light, `
+    assertInCheck(Color.White, `
       | | | | | | | | |
       | | | | | | | | |
       | | | | | | | |p|
@@ -96,7 +96,7 @@ describe('Validate king check status', () => {
   });
 
   it('dark king is safe', () => {
-    assertNotInCheck(Color.Light, `
+    assertNotInCheck(Color.White, `
       | | |B| | | | | |
       | | | | | | | | |
       | | | | |p| | | |

@@ -27,7 +27,7 @@ const testCases: [[BoardSquare, BoardSquare], boolean][] = [
 
 describe('Validate pawn movements (no en-passant)', () => {
   it('should validate movement based on position', () => {
-    let game = createGameFromPosition(testPosition, Color.Dark);
+    let game = createGameFromPosition(testPosition, Color.Black);
     testCases.forEach(([[fromSquare, toSquare], expected]) => {
       const pawn = { ...game.board[fromSquare], square: fromSquare } as PlacedPiece;
       const result = canMoveTo(pawn, toSquare, game.board);

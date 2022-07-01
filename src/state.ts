@@ -1,8 +1,8 @@
-import { BoardState, getEmptyBoard, getToSquare } from './board';
+import { BoardSquare, BoardState, getEmptyBoard, getToSquare } from './board';
 import { Color, getOppositeColor } from './common';
 import { getInitialPosition } from './initial';
 import { createPawnDoubleStepMove, createPawnEnPassantMove, isPawnDoubleStepMove, isPawnEnPassantMove, Move, MoveType } from './move';
-import { getCastlingSquares } from './castling';
+import { Castling, getCastlingSquares } from './castling';
 import { PlacedPiece, Piece, GamePosition, getPiecesChecklist, getPieceToken, getPieceId, getPieceFromToken, getPawnSquares } from './piece';
 
 export interface GameState {
@@ -11,9 +11,18 @@ export interface GameState {
   inCheck: boolean;
   pieces: PlacedPiece[];
   lastMove: Move | null;
-  capturedPieces: {
-    [color in Color]: Piece[];
+  capturedPieces: { [color in Color]: Piece[] };
+
+  // TODO
+  castlingAvailability: {
+    [color in Color]: {
+      [castling in Castling]: boolean;
+    }
   };
+  enPassant: BoardSquare | null;
+  halfMovesCount: number;
+  movesCount: number;
+  moves: Move[];
 }
 
 // Thanks to https://bobbyhadz.com/blog/typescript-extend-error-class
@@ -40,19 +49,19 @@ export class IllegalMoveError extends Error {
 }
 
 export const createGame = (): GameState => {
-  return createGameFromPosition(getInitialPosition(), Color.Light);
+  return createGameFromPosition(getInitialPosition(), Color.White);
 };
 
 // TODO: Validate position?
 export const createGameFromPosition = (
   position: GamePosition,
-  turn: Color = Color.Light,
+  turn: Color = Color.White,
 ): GameState => {
   const board = getEmptyBoard();
   const pieces: PlacedPiece[] = [];
   const capturedPieces: GameState['capturedPieces'] = {
-    [Color.Dark]: [],
-    [Color.Light]: [],
+    [Color.Black]: [],
+    [Color.White]: [],
   };
   const piecesChecklist = getPiecesChecklist();
 
@@ -80,6 +89,22 @@ export const createGameFromPosition = (
     inCheck: false, // TODO: Check status,
     pieces,
     capturedPieces,
+
+    // TODO
+    castlingAvailability: {
+      [Color.White]: {
+        [Castling.KingSide]: false,
+        [Castling.QueenSide]: false,
+      },
+      [Color.Black]: {
+        [Castling.KingSide]: false,
+        [Castling.QueenSide]: false,
+      },
+    },
+    enPassant: null,
+    halfMovesCount: 0,
+    movesCount: 1,
+    moves: [],
   };
 };
 

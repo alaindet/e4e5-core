@@ -4,10 +4,10 @@ import { AbstractPiece, AbstractPieceToken, Figure, getPieceFromToken, getPieceT
 describe('Piece', () => {
 
   const testCases: [AbstractPiece, AbstractPieceToken][] = [
-    [{ figure: Figure.King, color: Color.Light }, `${Figure.King}${Color.Light}`],
-    [{ figure: Figure.Queen, color: Color.Dark }, `${Figure.Queen}${Color.Dark}`],
-    [{ figure: Figure.Bishop, color: Color.Light }, `${Figure.Bishop}${Color.Light}`],
-    [{ figure: Figure.Rook, color: Color.Dark }, `${Figure.Rook}${Color.Dark}`],
+    [{ figure: Figure.King, color: Color.White }, `${Figure.King}${Color.White}`],
+    [{ figure: Figure.Queen, color: Color.Black }, `${Figure.Queen}${Color.Black}`],
+    [{ figure: Figure.Bishop, color: Color.White }, `${Figure.Bishop}${Color.White}`],
+    [{ figure: Figure.Rook, color: Color.Black }, `${Figure.Rook}${Color.Black}`],
   ];
 
   it('Get token from piece', () => {

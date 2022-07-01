@@ -22,7 +22,7 @@ export const getCastlingSquares = (
   color: Color,
   castling: Castling,
 ): CastlingSquares => {
-  if (color === Color.Light && castling === Castling.KingSide) {
+  if (color === Color.White && castling === Castling.KingSide) {
     return {
       kingFrom: BoardSquare.E1,
       rookFrom: BoardSquare.H1,
@@ -32,7 +32,7 @@ export const getCastlingSquares = (
     };
   }
 
-  if (color === Color.Light && castling === Castling.QueenSide) {
+  if (color === Color.White && castling === Castling.QueenSide) {
     return {
       kingFrom: BoardSquare.E1,
       rookFrom: BoardSquare.A1,
@@ -42,7 +42,7 @@ export const getCastlingSquares = (
     };
   }
 
-  if (color === Color.Dark && castling === Castling.KingSide) {
+  if (color === Color.Black && castling === Castling.KingSide) {
     return {
       kingFrom: BoardSquare.E8,
       rookFrom: BoardSquare.H8,

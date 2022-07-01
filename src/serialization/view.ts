@@ -23,7 +23,7 @@ const renderBoard = (board: BoardState): string => {
   const EMPTY_SQUARE = '  ';
   const VIEW_SYMBOLS: ViewSymbols = {
     pieces: {
-      [Color.Light]: {
+      [Color.White]: {
         [Figure.King]: 'K ',
         [Figure.Queen]: 'Q ',
         [Figure.Bishop]: 'B ',
@@ -31,7 +31,7 @@ const renderBoard = (board: BoardState): string => {
         [Figure.Rook]: 'R ',
         [Figure.Pawn]: 'P ',
       },
-      [Color.Dark]: {
+      [Color.Black]: {
         [Figure.King]: 'K ',
         [Figure.Queen]: 'Q ',
         [Figure.Bishop]: 'B ',
@@ -41,12 +41,12 @@ const renderBoard = (board: BoardState): string => {
       },
     },
     textColor: {
-      [Color.Light]: ConsoleColorText.Red,
-      [Color.Dark]: ConsoleColorText.Green,
+      [Color.White]: ConsoleColorText.Red,
+      [Color.Black]: ConsoleColorText.Green,
     },
     backgroundColor: {
-      [Color.Light]: ConsoleColorBackground.White,
-      [Color.Dark]: ConsoleColorBackground.Black,
+      [Color.White]: ConsoleColorBackground.White,
+      [Color.Black]: ConsoleColorBackground.Black,
     },
   };
 

@@ -31,13 +31,13 @@ describe('Chessboard utils', () => {
 
   it('should extract square color', () => {
     const testCases: [BoardSquare, Color][] = [
-      [BoardSquare.A1, Color.Dark],
-      [BoardSquare.A8, Color.Light],
-      [BoardSquare.H1, Color.Light],
-      [BoardSquare.H8, Color.Dark],
-      [BoardSquare.E4, Color.Light],
-      [BoardSquare.C3, Color.Dark],
-      [BoardSquare.G5, Color.Dark],
+      [BoardSquare.A1, Color.Black],
+      [BoardSquare.A8, Color.White],
+      [BoardSquare.H1, Color.White],
+      [BoardSquare.H8, Color.Black],
+      [BoardSquare.E4, Color.White],
+      [BoardSquare.C3, Color.Black],
+      [BoardSquare.G5, Color.Black],
     ];
 
     testCases.forEach(([input, expected]) => {

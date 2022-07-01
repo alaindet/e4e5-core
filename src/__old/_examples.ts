@@ -36,13 +36,13 @@ export const example3 = () => {
 export const example4 = () => {
 
   const position = [
-    { figure: Figure.King, color: Color.Light, square: BoardSquare.D5 },
-    { figure: Figure.King, color: Color.Dark, square: BoardSquare.D8 },
-    { figure: Figure.Pawn, color: Color.Light, square: BoardSquare.F7 },
-    { figure: Figure.Pawn, color: Color.Dark, square: BoardSquare.B2 },
+    { figure: Figure.King, color: Color.White, square: BoardSquare.D5 },
+    { figure: Figure.King, color: Color.Black, square: BoardSquare.D8 },
+    { figure: Figure.Pawn, color: Color.White, square: BoardSquare.F7 },
+    { figure: Figure.Pawn, color: Color.Black, square: BoardSquare.B2 },
   ];
 
-  let game = createGameFromPosition(position, Color.Light);
+  let game = createGameFromPosition(position, Color.White);
   game = updateGame(game, createMove('F7', 'F8', Figure.Queen));
   viewGame(game);
 };
@@ -75,13 +75,13 @@ export const example5 = () => {
 export const example6 = () => {
 
   const position = [
-    { figure: Figure.King, color: Color.Light, square: BoardSquare.E1 },
-    { figure: Figure.King, color: Color.Dark, square: BoardSquare.E8 },
-    { figure: Figure.Pawn, color: Color.Light, square: BoardSquare.E2 },
-    { figure: Figure.Pawn, color: Color.Dark, square: BoardSquare.F4 },
+    { figure: Figure.King, color: Color.White, square: BoardSquare.E1 },
+    { figure: Figure.King, color: Color.Black, square: BoardSquare.E8 },
+    { figure: Figure.Pawn, color: Color.White, square: BoardSquare.E2 },
+    { figure: Figure.Pawn, color: Color.Black, square: BoardSquare.F4 },
   ];
 
-  const movesFirst = Color.Light;
+  const movesFirst = Color.White;
 
   const moves = [
     createMove('E2', 'E4'),
@@ -102,12 +102,12 @@ export const example6 = () => {
 
 export const example7 = () => {
   const position = [
-    { figure: Figure.King, color: Color.Light, square: BoardSquare.E1 },
-    { figure: Figure.King, color: Color.Dark, square: BoardSquare.E8 },
-    { figure: Figure.Bishop, color: Color.Dark, square: BoardSquare.A1 },
+    { figure: Figure.King, color: Color.White, square: BoardSquare.E1 },
+    { figure: Figure.King, color: Color.Black, square: BoardSquare.E8 },
+    { figure: Figure.Bishop, color: Color.Black, square: BoardSquare.A1 },
   ];
 
-  let game = createGameFromPosition(position, Color.Dark);
+  let game = createGameFromPosition(position, Color.Black);
   viewGame(game);
 };
 

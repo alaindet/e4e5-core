@@ -36,7 +36,7 @@ export const fromFENBoard = (board: string): GamePosition => {
 };
 
 export const fromFENActive = (active: string): Color => {
-  return active === 'w' ? Color.Light : Color.Dark;
+  return active === 'w' ? Color.White : Color.Black;
 };
 
 // https://en.wikipedia.org/wiki/Forsyth%E2%80%93Edwards_Notation
@@ -45,6 +45,10 @@ export const fromFEN = (fen: string): GameState => {
   // TODO: Add this missing data to game
   const [board, active, castling, enPassant, halfMoves, fullMoves] = fen.split(' ');
   const position = fromFENBoard(board);
-  const turn = fromFENActive(active);
-  return createGameFromPosition(position, turn);
+  const game = createGameFromPosition(position);
+
+  game.turn = fromFENActive(active);
+
+
+  return game;
 };

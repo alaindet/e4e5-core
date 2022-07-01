@@ -3,8 +3,8 @@ import { Color, getOppositeColor } from './common';
 describe('Get opposite color', () => {
 
   const testCases: [Color, Color][] = [
-    [Color.Dark, Color.Light],
-    [Color.Light, Color.Dark],
+    [Color.Black, Color.White],
+    [Color.White, Color.Black],
   ];
 
   it('should provide the opposite color', () => {

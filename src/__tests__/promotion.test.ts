@@ -1,4 +1,4 @@
-import { assertBoardState } from './utils';
+import { assertBoardState } from '../utils/assert-board-state';
 import { createMove, Move } from '../move';
 import { createGame, updateGame } from '../state';
 import { BoardSquare } from '../board';
@@ -24,8 +24,8 @@ describe('Castling', () => {
 
     // Sample some squares, avoid testing all
     assertBoardState(game.board, [
-      [BoardSquare.G1, { figure: Figure.King, color: Color.Light }],
-      [BoardSquare.F1, { figure: Figure.Rook, color: Color.Light }],
+      [BoardSquare.G1, { figure: Figure.King, color: Color.White }],
+      [BoardSquare.F1, { figure: Figure.Rook, color: Color.White }],
     ]);
   });
 });

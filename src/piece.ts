@@ -47,7 +47,7 @@ export const getPawnSquares = (color: Color): {
   ahead: BoardDirection;
   capture: [BoardDirection, BoardDirection];
 } => {
-  if (color === Color.Light) {
+  if (color === Color.White) {
     return {
       ahead: BoardDirection.Top,
       capture: [BoardDirection.DiagonalTopLeft, BoardDirection.DiagonalTopRight],
@@ -62,18 +62,18 @@ export const getPawnSquares = (color: Color): {
 
 export const getPiecesChecklist = (): PiecesChecklist => {
   return new Map<AbstractPieceToken, number>([
-    [`${Figure.King}${Color.Light}`, 1],
-    [`${Figure.Queen}${Color.Light}`, 1],
-    [`${Figure.Bishop}${Color.Light}`, 2],
-    [`${Figure.Knight}${Color.Light}`, 2],
-    [`${Figure.Rook}${Color.Light}`, 2],
-    [`${Figure.Pawn}${Color.Light}`, 8],
-    [`${Figure.King}${Color.Dark}`, 1],
-    [`${Figure.Queen}${Color.Dark}`, 1],
-    [`${Figure.Bishop}${Color.Dark}`, 2],
-    [`${Figure.Knight}${Color.Dark}`, 2],
-    [`${Figure.Rook}${Color.Dark}`, 2],
-    [`${Figure.Pawn}${Color.Dark}`, 8],
+    [`${Figure.King}${Color.White}`, 1],
+    [`${Figure.Queen}${Color.White}`, 1],
+    [`${Figure.Bishop}${Color.White}`, 2],
+    [`${Figure.Knight}${Color.White}`, 2],
+    [`${Figure.Rook}${Color.White}`, 2],
+    [`${Figure.Pawn}${Color.White}`, 8],
+    [`${Figure.King}${Color.Black}`, 1],
+    [`${Figure.Queen}${Color.Black}`, 1],
+    [`${Figure.Bishop}${Color.Black}`, 2],
+    [`${Figure.Knight}${Color.Black}`, 2],
+    [`${Figure.Rook}${Color.Black}`, 2],
+    [`${Figure.Pawn}${Color.Black}`, 8],
   ]);
 };
 
@@ -87,7 +87,7 @@ export const getPieceToken = (piece: AbstractPiece): AbstractPieceToken => {
 
 export const getPieceFromToken = (token: AbstractPieceToken): Piece => {
   const figure = token[0] as Figure;
-  const color = +token[1] as Color;
+  const color = token[1] as Color;
   const id = getPieceId({ figure, color });
   return { id, figure, color };
 };

@@ -77,7 +77,7 @@ export const getSquareFromCoordinates = (
 // Ex.: 'B3' => 2 + 5 is odd => light square
 export const getSquareColor = (square: BoardSquare): Color => {
   const [file, rank] = getSquareCoordinates(square);
-  return (file + rank) % 2 === 0 ? Color.Dark : Color.Light;
+  return (file + rank) % 2 === 0 ? Color.Black : Color.White;
 };
 
 export const getToSquare = (

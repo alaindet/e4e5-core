@@ -1,4 +1,4 @@
-import { assertBoardState } from './utils';
+import { assertBoardState } from '../utils/assert-board-state';
 import { createMove, Move } from '../move';
 import { createGame, createGameFromPosition, updateGame } from '../state';
 import { BoardSquare } from '../board';
@@ -22,8 +22,8 @@ describe('Castling', () => {
 
     // Sample some squares, avoid testing all
     assertBoardState(game.board, [
-      [BoardSquare.G1, { figure: Figure.King, color: Color.Light }],
-      [BoardSquare.F1, { figure: Figure.Rook, color: Color.Light }],
+      [BoardSquare.G1, { figure: Figure.King, color: Color.White }],
+      [BoardSquare.F1, { figure: Figure.Rook, color: Color.White }],
     ]);
   });
 
@@ -44,25 +44,25 @@ describe('Castling', () => {
       createMove('F3', 'G4'), createMove('O-O-O'),
     ];
 
-    let game = createGameFromPosition(position, Color.Light);
+    let game = createGameFromPosition(position, Color.White);
     moves.forEach(move => game = updateGame(game, move));
 
     assertBoardState(game.board, [
-      [BoardSquare.C8, { figure: Figure.King, color: Color.Dark }],
-      [BoardSquare.D8, { figure: Figure.Rook, color: Color.Dark }],
+      [BoardSquare.C8, { figure: Figure.King, color: Color.Black }],
+      [BoardSquare.D8, { figure: Figure.Rook, color: Color.Black }],
     ]);
   });
 
   // TODO
   // it('should prevent user from illegal castling', () => {
   //   const position = [
-  //     { figure: Figure.King, color: Color.Dark, square: BoardSquare.E8 },
-  //     { figure: Figure.Rook, color: Color.Dark, square: BoardSquare.A8 },
-  //     { figure: Figure.King, color: Color.Light, square: BoardSquare.F3 },
-  //     { figure: Figure.Rook, color: Color.Light, square: BoardSquare.C5 },
+  //     { figure: Figure.King, color: Color.Black, square: BoardSquare.E8 },
+  //     { figure: Figure.Rook, color: Color.Black, square: BoardSquare.A8 },
+  //     { figure: Figure.King, color: Color.White, square: BoardSquare.F3 },
+  //     { figure: Figure.Rook, color: Color.White, square: BoardSquare.C5 },
   //   ];
 
-  //   let game = createGameFromPosition(position, Color.Light);
+  //   let game = createGameFromPosition(position, Color.White);
   //   game = updateGame(game, createMove('F3', 'G4'));
   //   expect(updateGame(game, createMove('O-O-O'))).toThrow(IllegalMoveError);
   // });

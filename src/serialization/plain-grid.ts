@@ -18,18 +18,18 @@ export const fromPlainGrid = (view: string): GamePosition => {
 
   const EMPTY_SQUARE = ' ';
   const PIECES: { [s: string]: AbstractPiece } = {
-    K: { figure: Figure.King, color: Color.Light },
-    Q: { figure: Figure.Queen, color: Color.Light },
-    R: { figure: Figure.Rook, color: Color.Light },
-    B: { figure: Figure.Bishop, color: Color.Light },
-    N: { figure: Figure.Knight, color: Color.Light },
-    P: { figure: Figure.Pawn, color: Color.Light },
-    k: { figure: Figure.King, color: Color.Dark },
-    q: { figure: Figure.Queen, color: Color.Dark },
-    r: { figure: Figure.Rook, color: Color.Dark },
-    b: { figure: Figure.Bishop, color: Color.Dark },
-    n: { figure: Figure.Knight, color: Color.Dark },
-    p: { figure: Figure.Pawn, color: Color.Dark },
+    K: { figure: Figure.King, color: Color.White },
+    Q: { figure: Figure.Queen, color: Color.White },
+    R: { figure: Figure.Rook, color: Color.White },
+    B: { figure: Figure.Bishop, color: Color.White },
+    N: { figure: Figure.Knight, color: Color.White },
+    P: { figure: Figure.Pawn, color: Color.White },
+    k: { figure: Figure.King, color: Color.Black },
+    q: { figure: Figure.Queen, color: Color.Black },
+    r: { figure: Figure.Rook, color: Color.Black },
+    b: { figure: Figure.Bishop, color: Color.Black },
+    n: { figure: Figure.Knight, color: Color.Black },
+    p: { figure: Figure.Pawn, color: Color.Black },
   };
 
   const pos: GamePosition = [];

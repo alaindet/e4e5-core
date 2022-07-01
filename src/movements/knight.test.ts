@@ -20,15 +20,15 @@ const testCases: {
   input: [Color, BoardSquare, BoardSquare];
   expected: boolean;
 }[] = [
-  { input: [Color.Light, BoardSquare.E3, BoardSquare.F5], expected: true },
-  { input: [Color.Light, BoardSquare.E3, BoardSquare.G2], expected: true },
-  { input: [Color.Light, BoardSquare.E3, BoardSquare.H1], expected: false },
-  { input: [Color.Light, BoardSquare.E3, BoardSquare.F2], expected: false },
-  { input: [Color.Light, BoardSquare.D3, BoardSquare.E5], expected: true },
-  { input: [Color.Light, BoardSquare.D3, BoardSquare.F4], expected: true },
-  { input: [Color.Dark, BoardSquare.C6, BoardSquare.D4], expected: true },
-  { input: [Color.Dark, BoardSquare.C6, BoardSquare.A7], expected: true },
-  { input: [Color.Dark, BoardSquare.C6, BoardSquare.E5], expected: false },
+  { input: [Color.White, BoardSquare.E3, BoardSquare.F5], expected: true },
+  { input: [Color.White, BoardSquare.E3, BoardSquare.G2], expected: true },
+  { input: [Color.White, BoardSquare.E3, BoardSquare.H1], expected: false },
+  { input: [Color.White, BoardSquare.E3, BoardSquare.F2], expected: false },
+  { input: [Color.White, BoardSquare.D3, BoardSquare.E5], expected: true },
+  { input: [Color.White, BoardSquare.D3, BoardSquare.F4], expected: true },
+  { input: [Color.Black, BoardSquare.C6, BoardSquare.D4], expected: true },
+  { input: [Color.Black, BoardSquare.C6, BoardSquare.A7], expected: true },
+  { input: [Color.Black, BoardSquare.C6, BoardSquare.E5], expected: false },
 ];
 
 describe('Validate knight movements', () => {

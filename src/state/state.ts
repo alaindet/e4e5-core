@@ -12,10 +12,13 @@ export const createGame = (): GameState => {
   return createGameFromPosition(getInitialPosition());
 };
 
-// TODO: Validate position?
-export const createGameFromPosition = (position: GamePosition): GameState => {
+export const createGameFromPosition = (
+  position: GamePosition,
+  turn?: Color,
+): GameState => {
   const game = getGameDefaults();
   const piecesChecklist = getPiecesChecklist();
+  game.turn = turn ?? Color.White;
 
   for (const abstractPiece of position) {
     const token = getPieceToken(abstractPiece);
@@ -35,6 +38,26 @@ export const createGameFromPosition = (position: GamePosition): GameState => {
     game.capturedPieces[oppositeColor].push(piece);
   }
 
+  // TODO: Validate check status
+
+  return game;
+};
+
+export const updateCastlingAvailability = (game: GameState): GameState => {
+
+  const castling: [Color, Castling][] = [
+    [Color.White, Castling.KingSide],
+    [Color.White, Castling.QueenSide],
+    [Color.Black, Castling.KingSide],
+    [Color.Black, Castling.QueenSide],
+  ];
+
+  castling.forEach(([color, side]) => {
+    const squares = getCastlingSquares(color, side);
+    // TODO
+  });
+
+  // TODO
   return game;
 };
 

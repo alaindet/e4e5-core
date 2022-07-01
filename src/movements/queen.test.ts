@@ -28,8 +28,7 @@ const testCases: [BoardSquare, boolean][] = [
 
 describe('Validate queen movements', () => {
   it('should validate movement based on position', () => {
-    let game = createGameFromPosition(testPosition);
-    game.turn = Color.White;
+    let game = createGameFromPosition(testPosition, Color.White);
     const fromSquare = BoardSquare.D4;
     const queen = { ...game.board[fromSquare], square: fromSquare } as PlacedPiece;
     testCases.forEach(([square, expected]) => {

@@ -5,15 +5,13 @@ import { fromPlainGrid } from './serialization/plain-grid';
 
 const assertInCheck = (color: Color, positionView: string) => {
   const position = fromPlainGrid(positionView);
-  const game = createGameFromPosition(position);
-  game.turn = color;
+  const game = createGameFromPosition(position, color);
   expect(inCheck(game)).toBe(true);
 };
 
 const assertNotInCheck = (color: Color, positionView: string) => {
   const position = fromPlainGrid(positionView);
-  const game = createGameFromPosition(position);
-  game.turn = color;
+  const game = createGameFromPosition(position, color);
   expect(inCheck(game)).toBe(false);
 };
 

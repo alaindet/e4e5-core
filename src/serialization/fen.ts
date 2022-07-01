@@ -45,10 +45,7 @@ export const fromFEN = (fen: string): GameState => {
   // TODO: Add this missing data to game
   const [board, active, castling, enPassant, halfMoves, fullMoves] = fen.split(' ');
   const position = fromFENBoard(board);
-  const game = createGameFromPosition(position);
-
-  game.turn = fromFENActive(active);
-
+  const game = createGameFromPosition(position, fromFENActive(active));
 
   return game;
 };

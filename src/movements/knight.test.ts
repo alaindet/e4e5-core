@@ -35,8 +35,7 @@ describe('Validate knight movements', () => {
   it('should validate movement based on position', () => {
     testCases.forEach(({ input, expected }) => {
       const [color, fromSquare, toSquare] = input;
-      let game = createGameFromPosition(testPosition);
-      game.turn = color;
+      let game = createGameFromPosition(testPosition, color);
       const knight = { ...game.board[fromSquare], square: fromSquare } as PlacedPiece;
       const result = canMoveTo(knight, toSquare, game.board);
       expect(result).toBe(expected);

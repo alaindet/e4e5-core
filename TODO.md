@@ -22,3 +22,4 @@
 - [ ] Use PieceLetter into viewGame()
 - [x] Move viewGame() into serialization
 - [ ] Update README.md
+- [ ] Change all anonymous exported functions as proper functions

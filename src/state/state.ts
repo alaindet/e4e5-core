@@ -2,8 +2,8 @@ import { BoardSquare, BoardState, getEmptyBoard, getToSquare } from '../board';
 import { Color, getOppositeColor } from '../common';
 import { getInitialPosition } from '../initial';
 import { Move, MoveType } from '../move';
-import { Castling, getCastlingSquares } from '../castling';
-import { PlacedPiece, Piece, GamePosition, getPiecesChecklist, getPieceToken, getPieceId, getPieceFromToken, getPawnSquares } from '../piece';
+import { Castling, getCastlingSquares, isCastlingAvailable } from '../castling';
+import { PlacedPiece, Piece, GamePosition, getPiecesChecklist, getPieceToken, getPieceId, getPieceFromToken, getPawnDirections } from '../piece';
 import { NoPieceFoundError, PieceOwnershipError } from 'state/errors';
 import { GameState } from './types';
 import { getGameDefaults } from './default-state';
@@ -43,6 +43,7 @@ export const createGameFromPosition = (
   return game;
 };
 
+// This does not account for checking
 export const updateCastlingAvailability = (game: GameState): GameState => {
 
   const castling: [Color, Castling][] = [
@@ -53,11 +54,10 @@ export const updateCastlingAvailability = (game: GameState): GameState => {
   ];
 
   castling.forEach(([color, side]) => {
-    const squares = getCastlingSquares(color, side);
-    // TODO
+    const isAvailable = isCastlingAvailable(game, color, side);
+    game.castlingAvailability[color][side] = isAvailable;
   });
 
-  // TODO
   return game;
 };
 
@@ -113,7 +113,7 @@ export const updateGame = (game: GameState, move: Move): GameState => {
 
   // // En passant?
   // if (move.type === MoveType.PawnEnPassant) {
-  //   const ghostPawn = getToSquare(move.to, getPawnSquares(game.turn).ahead, -1);
+  //   const ghostPawn = getToSquare(move.to, getPawnDirections(game.turn).ahead, -1);
   //   game.board[ghostPawn] = null;
   // }
 

@@ -1,6 +1,6 @@
 import { getOppositeColor } from '../common';
 import { BoardSquare, BoardState, getToSquare } from '../board';
-import { getPawnSquares, PlacedPiece } from '../piece';
+import { getPawnDirections, PlacedPiece } from '../piece';
 
 // Skip en-passant for now
 export const canPawnMoveTo = (
@@ -9,7 +9,7 @@ export const canPawnMoveTo = (
   board: BoardState,
 ): boolean => {
 
-  const dirs = getPawnSquares(piece.color);
+  const dirs = getPawnDirections(piece.color);
   const ahead = getToSquare(piece.square, dirs.ahead, 1);
 
   // Going ahead?

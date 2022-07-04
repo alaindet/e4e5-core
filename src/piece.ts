@@ -43,7 +43,7 @@ export type AbstractPieceToken = `${Figure}${Color}`;
 
 export type PiecesChecklist = Map<AbstractPieceToken, number>;
 
-export const getPawnSquares = (color: Color): {
+export const getPawnDirections = (color: Color): {
   ahead: BoardDirection;
   capture: [BoardDirection, BoardDirection];
 } => {

@@ -1,4 +1,5 @@
-import { BoardSquare } from './board';
+import { CastlingMove } from 'move';
+import { BoardSquare, BoardState } from './board';
 import { Color } from './common';
 import { Figure, PlacedPiece } from './piece';
 import { GameState } from './state';
@@ -62,13 +63,14 @@ export const getCastlingSquares = (
   };
 };
 
-export const isCastlingLegal = (game: GameState, castling: Castling): boolean => {
+// This does not account for threats
+export const isCastlingAvailable = (
+  game: GameState,
+  color: Color,
+  castling: Castling,
+): boolean => {
 
-  if (game.inCheck) {
-    return false;
-  }
-
-  const squares = getCastlingSquares(game.turn, castling);
+  const squares = getCastlingSquares(color, castling);
 
   let king: PlacedPiece | null = null;
   let rook: PlacedPiece | null = null;
@@ -97,9 +99,6 @@ export const isCastlingLegal = (game: GameState, castling: Castling): boolean =>
     }
   }
 
-  // TODO: Should not transit on attacked squares
-  // ...
-
   // There should be a king and a rook with no previous movements
   if (!king || !rook) {
     return false;
@@ -114,3 +113,8 @@ export const isCastlingLegal = (game: GameState, castling: Castling): boolean =>
 
   return true;
 };
+
+export function performCastling(game: GameState, move: CastlingMove): GameState {
+  // TODO...
+  return game;
+}

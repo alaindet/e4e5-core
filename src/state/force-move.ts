@@ -1,9 +1,8 @@
-import { BasicMove, PawnDoubleStepMove, PawnEnPassantMove } from '../move';
-import { getToSquare } from 'board';
-import { performCastling } from 'castling';
-import { canMoveTo } from 'movements/can-move';
-import { Figure, getPawnDirections, Piece } from 'piece';
-import { Move, MoveType } from '../move';
+import { BasicMove, PawnDoubleStepMove, PawnEnPassantMove, Move, MoveType } from '../move';
+import { getToSquare } from '../board';
+import { performCastling } from '../castling';
+import { canMoveTo } from '../movements/can-move';
+import { Figure, getPawnDirections, Piece } from '../piece';
 import { IllegalMoveError, NoPieceFoundError } from './errors';
 import { GameState } from './types';
 

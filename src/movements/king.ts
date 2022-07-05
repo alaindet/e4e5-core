@@ -1,8 +1,8 @@
 import { BoardSquare, BoardState, getSquaresDistance } from '../board';
-import { PlacedPiece } from '../piece';
+import { AbstractPlacedPiece, PlacedPiece } from '../piece';
 
 export const canKingMoveTo = (
-  piece: PlacedPiece,
+  piece: PlacedPiece | AbstractPlacedPiece,
   square: BoardSquare,
   board: BoardState,
 ): boolean => {

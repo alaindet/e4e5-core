@@ -1,10 +1,10 @@
 import { BoardSquare, BoardState, getSquaresDiff } from '../board';
-import { PlacedPiece } from '../piece';
+import { AbstractPlacedPiece, PlacedPiece } from '../piece';
 
 // Short L movement example: A1 => B3
 // Long L movement example: A1 => C2
 export const canKnightMoveTo = (
-  piece: PlacedPiece,
+  piece: PlacedPiece | AbstractPlacedPiece,
   square: BoardSquare,
   board: BoardState,
 ): boolean => {

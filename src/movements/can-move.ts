@@ -1,4 +1,4 @@
-import { Figure, PlacedPiece } from '../piece';
+import { AbstractPlacedPiece, Figure, PlacedPiece } from '../piece';
 import { BoardSquare, BoardState } from '../board';
 import { canBishopMoveTo } from './bishop';
 import { canKingMoveTo } from './king';
@@ -14,7 +14,7 @@ import { canRookMoveTo } from './rook';
  * En passant is not managed either as it relies on game state
  */
 export const canMoveTo = (
-  piece: PlacedPiece,
+  piece: PlacedPiece | AbstractPlacedPiece,
   square: BoardSquare,
   board: BoardState,
 ): boolean => {

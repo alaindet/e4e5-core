@@ -1,5 +1,7 @@
-import { fromFEN } from './fen';
+import { Color } from '../common';
+import { Castling } from '../castling';
 import { createGame, GameState } from '../state';
+import { fromFEN } from './fen';
 
 const serializeBoardFromGame = (game: GameState): string[] => {
   const board = game.board as any;
@@ -19,6 +21,7 @@ describe('Forsyth–Edwards Notation serialization', () => {
     const result = serializeBoardFromGame(game).sort();
     const expected = serializeBoardFromGame(createGame()).sort();
     expect(result).toEqual(expected);
+    // expect(game.castlingAvailability[Color.Black][Castling.QueenSide]).toBe(true);
   });
 });
 

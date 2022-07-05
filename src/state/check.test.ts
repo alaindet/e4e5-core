@@ -1,7 +1,7 @@
-import { createGameFromPosition } from './state/state';
-import { Color } from './common';
+import { fromPlainGrid } from '../serialization';
+import { Color } from '../common';
+import { createGameFromPosition } from './state';
 import { inCheck } from './check';
-import { fromPlainGrid } from './serialization/plain-grid';
 
 const assertInCheck = (color: Color, positionView: string) => {
   const position = fromPlainGrid(positionView);

@@ -115,6 +115,32 @@ export const isCastlingAvailable = (
 };
 
 export function performCastling(game: GameState, move: CastlingMove): GameState {
-  // TODO...
+
+  const squares = getCastlingSquares(game.turn, move.castling);
+
+  game.board[squares.kingTo] = game.board[squares.kingFrom];
+  game.board[squares.kingFrom] = null;
+  game.board[squares.rookTo] = game.board[squares.rookFrom];
+  game.board[squares.rookFrom] = null;
+  
   return game;
 }
+
+
+// This does not account for checking
+export function updateCastlingAvailability(game: GameState): GameState {
+
+  const castling: [Color, Castling][] = [
+    [Color.White, Castling.KingSide],
+    [Color.White, Castling.QueenSide],
+    [Color.Black, Castling.KingSide],
+    [Color.Black, Castling.QueenSide],
+  ];
+
+  castling.forEach(([color, side]) => {
+    const isAvailable = isCastlingAvailable(game, color, side);
+    game.castlingAvailability[color][side] = isAvailable;
+  });
+
+  return game;
+};

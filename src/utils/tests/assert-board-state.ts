@@ -1,5 +1,5 @@
-import { BoardSquare, BoardState } from '../board';
-import { AbstractPiece } from '../piece';
+import { BoardSquare, BoardState } from '../../board';
+import { AbstractPiece } from '../../piece';
 
 export const assertBoardState = (
   board: BoardState,

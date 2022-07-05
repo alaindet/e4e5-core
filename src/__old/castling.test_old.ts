@@ -1,4 +1,4 @@
-import { assertBoardState } from '../utils/assert-board-state';
+import { assertBoardState } from '../utils';
 import { createMove, Move } from '../move';
 import { createGame, createGameFromPosition, updateGame } from '../state/state';
 import { BoardSquare } from '../board';

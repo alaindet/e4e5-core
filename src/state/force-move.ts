@@ -1,14 +1,16 @@
-import { BasicMove, PawnDoubleStepMove, PawnEnPassantMove, Move, MoveType } from '../move';
-import { getToSquare } from '../board';
-import { performCastling } from '../castling';
-import { canMoveTo } from '../movements/can-move';
-import { Figure, getPawnDirections, Piece } from '../piece';
+import { BasicMove, Move, MoveType } from '@/move';
+import { getToSquare } from '@/board';
+import { performCastling, updateCastlingAvailability } from '@/castling';
+import { canMoveTo } from '@/movements';
+import { getPawnDirections, Piece } from '@/piece';
+import { Color, getOppositeColor } from '@/common';
+import { removeAt } from '@/utils';
 import { IllegalMoveError, NoPieceFoundError, PieceOwnershipError } from './errors';
 import { GameState } from './types';
-import { getOppositeColor } from '../common';
+import { upgradePawnMove } from './upgrade-pawn-move';
 
-// This forces a potentially illegal game state to further process legality. It
-// does not account for threats or clocks
+// This forces a potentially illegal game state to further process legality.
+// It ignores threats, win conditions, etc.
 export function forceMove(game: GameState, _move: Move): GameState {
 
   // Castling?
@@ -27,7 +29,7 @@ export function forceMove(game: GameState, _move: Move): GameState {
   }
 
   // Upgrade pawn move if needed
-  const move = specifyPawnMove(game, _move);
+  const move = upgradePawnMove(game, _move);
   const { from, to } = move as BasicMove;
   const fromPiece = game.board[from] as Piece;
   const fromPlacedPiece = { ...fromPiece, square: from };
@@ -40,6 +42,7 @@ export function forceMove(game: GameState, _move: Move): GameState {
   // Capture?
   const toPiece = game.board[to];
   if (toPiece !== null) {
+    game.pieces = game.pieces.filter(p => p.square !== to);
     const { id, figure, color } = toPiece;
     const capturedPiece = { id, figure, color };
     game.capturedPieces[game.turn].push(capturedPiece);
@@ -48,53 +51,52 @@ export function forceMove(game: GameState, _move: Move): GameState {
   // Promote?
   if (move.type === MoveType.PawnPromotion) {
     fromPiece.figure = move.promoteTo;
-    // TODO: Update game.pieces too
+    game.pieces = game.pieces.map(piece => {
+      if (piece.square === from) {
+        return { ...piece, figure: move.promoteTo };
+      }
+      return piece;
+    });
   }
 
-  // TODO: En passant?
+  // En passant?
+  if (move.type === MoveType.PawnEnPassant) {
+    const index = game.pieces.findIndex(p => p.square === game.enPassant);
+    const { id, figure, color } = game.pieces[index];
+    const capturedPiece = { id, figure, color };
+    game.capturedPieces[game.turn].push(capturedPiece);
+    game.pieces = removeAt(game.pieces, index);
+    game.enPassant = null;
+  }
 
   // Just move the piece
   game.board[from] = null;
   game.board[to] = fromPiece;
 
-  // Update game state
+  // Update en passant state
+  game.enPassant = null;
+  if (move.type === MoveType.PawnDoubleStep) {
+    const { ahead } = getPawnDirections(game.turn);
+    const enPassant = getToSquare(from, ahead, 1);
+    game.enPassant = enPassant;
+  }
+
+  // Update half move counter
+  game.halfMovesCount++;
+
+  // Update move counter
+  if (game.turn === Color.Black) {
+    game.movesCount++;
+  }
+
+  // Update castling availability
+  game = updateCastlingAvailability(game);
+
+  // Save last move
+  game.moves.push(move);
+
+  // Update turn
   game.turn = getOppositeColor(game.turn);
-  // TODO: Update en-passant
-  // TODO: Update halfMovesCount
-  // TODO: Update movesCount
-  // TODO: Update moves
-  // TODO: Update castlingAvailability
 
   return game;
 };
-
-// Specifies a basic move as a pawn double step or en passant, if possibile
-export function specifyPawnMove(game: GameState, move: Move): Move {
-
-  // Skip castling moves, promotions and
-  // pre-processed double step and en passant pawn moves
-  if (move.type !== MoveType.Basic) {
-    return move;
-  }
-
-  const piece = game.board[move.from] as Piece;
-
-  if (piece.figure !== Figure.Pawn) {
-    return move as BasicMove;
-  }
-
-  const dirs = getPawnDirections(piece.color);
-  const doubleStep = getToSquare(move.from, dirs.ahead, 2);
-
-  // Double-step?
-  if (move.to === doubleStep && game.board[move.to] !== null) {
-    return { ...move, type: MoveType.PawnDoubleStep } as PawnDoubleStepMove;
-  }
-
-  // En passant?
-  if (game.enPassant !== null && move.to === game.enPassant) {
-    return { ...move, type: MoveType.PawnEnPassant } as PawnEnPassantMove;
-  }
-
-  return move;
-}

@@ -22,4 +22,5 @@
 - [ ] Use PieceLetter into viewGame()
 - [x] Move viewGame() into serialization
 - [ ] Update README.md
+- [ ] Rename "light" to "white" and "dark" to "black"
 - [ ] Change all anonymous exported functions as proper functions

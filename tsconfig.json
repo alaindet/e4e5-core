@@ -16,6 +16,9 @@
     "strict": true,
     "target": "es2017",
     "types": ["node", "jest"],
+    "paths": {
+      "@/*": ["./*"]
+    },
   },
   "compileOnSave": true,
   "include": ["."]

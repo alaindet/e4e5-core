@@ -1,6 +1,7 @@
-import { Figure, PlacedPiece } from './piece';
-import { GameState } from './state';
-import { canMoveTo } from './movements/can-move';
+import { Color } from '@/common';
+import { Figure, PlacedPiece } from '@/piece';
+import { GameState } from '@/state';
+import { canMoveTo } from '@/movements';
 
 export class IllegalGameStateError extends Error {
   constructor(message: string) {
@@ -9,26 +10,27 @@ export class IllegalGameStateError extends Error {
   }
 }
 
-export const inCheck = (game: GameState): boolean => {
+export const inCheck = (game: GameState, color?: Color): boolean => {
 
+  const checkedColor = color ?? game.turn;
   let king: PlacedPiece | null = null;
   let attackingPieces: PlacedPiece[] = [];
 
   for (const piece of game.pieces) {
 
     // Attacking piece?
-    if (piece.color === game.turn && piece.figure !== Figure.King) {
+    if (piece.color === checkedColor  && piece.figure !== Figure.King) {
       attackingPieces.push(piece);
     }
 
     // King to be checked?
-    if (piece.color !== game.turn && piece.figure === Figure.King) {
+    if (piece.color !== checkedColor && piece.figure === Figure.King) {
       king = piece;
     }
   }
 
   // Should not be possible
-  if (king === null || attackingPieces.length === 0) {
+  if (king === null) {
     throw new IllegalGameStateError('Game state is illegal');
   }
 

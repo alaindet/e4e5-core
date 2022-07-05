@@ -118,7 +118,7 @@ export const updateGame = (game: GameState, move: Move): GameState => {
   // }
 
   // // Promoting?
-  // if (move.type === MoveType.Promotion) {
+  // if (move.type === MoveType.PawnPromotion) {
   //   fromPiece.figure = move.promoteTo;
   // }
 

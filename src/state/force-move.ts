@@ -3,8 +3,9 @@ import { getToSquare } from '../board';
 import { performCastling } from '../castling';
 import { canMoveTo } from '../movements/can-move';
 import { Figure, getPawnDirections, Piece } from '../piece';
-import { IllegalMoveError, NoPieceFoundError } from './errors';
+import { IllegalMoveError, NoPieceFoundError, PieceOwnershipError } from './errors';
 import { GameState } from './types';
+import { getOppositeColor } from '../common';
 
 // This forces a potentially illegal game state to further process legality. It
 // does not account for threats or clocks
@@ -20,6 +21,11 @@ export function forceMove(game: GameState, _move: Move): GameState {
     throw new NoPieceFoundError(`No piece found on ${_move.from}`);
   }
 
+  // Illegal move
+  if (game.board[_move.from]?.color !== game.turn) {
+    throw new PieceOwnershipError('You cannot move opponent\'s pieces');
+  }
+
   // Upgrade pawn move if needed
   const move = specifyPawnMove(game, _move);
   const { from, to } = move as BasicMove;
@@ -31,7 +37,33 @@ export function forceMove(game: GameState, _move: Move): GameState {
     throw new IllegalMoveError(`You cannot move the piece to ${to}`);
   }
 
-  // TODO: Perform move
+  // Capture?
+  const toPiece = game.board[to];
+  if (toPiece !== null) {
+    const { id, figure, color } = toPiece;
+    const capturedPiece = { id, figure, color };
+    game.capturedPieces[game.turn].push(capturedPiece);
+  }
+
+  // Promote?
+  if (move.type === MoveType.PawnPromotion) {
+    fromPiece.figure = move.promoteTo;
+    // TODO: Update game.pieces too
+  }
+
+  // TODO: En passant?
+
+  // Just move the piece
+  game.board[from] = null;
+  game.board[to] = fromPiece;
+
+  // Update game state
+  game.turn = getOppositeColor(game.turn);
+  // TODO: Update en-passant
+  // TODO: Update halfMovesCount
+  // TODO: Update movesCount
+  // TODO: Update moves
+  // TODO: Update castlingAvailability
 
   return game;
 };

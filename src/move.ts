@@ -6,7 +6,7 @@ import { GameState } from './state';
 export enum MoveType {
   Basic,
   Castling,
-  Promotion,
+  PawnPromotion,
   PawnEnPassant,
   PawnDoubleStep,
 }
@@ -23,8 +23,8 @@ export interface PawnDoubleStepMove {
   to: BoardSquare;
 }
 
-export interface PromotingMove {
-  type: MoveType.Promotion;
+export interface PawnPromotionMove {
+  type: MoveType.PawnPromotion;
   from: BoardSquare;
   to: BoardSquare;
   promoteTo: Figure;
@@ -43,7 +43,7 @@ export interface PawnEnPassantMove {
 
 export type Move = (
   | BasicMove
-  | PromotingMove
+  | PawnPromotionMove
   | CastlingMove
   | PawnEnPassantMove
   | PawnDoubleStepMove
@@ -89,7 +89,7 @@ export const createMove = (
   if (fromSquare === Castling.KingSide || fromSquare === Castling.QueenSide) {
     const type = MoveType.Castling;
     const castling = fromSquare;
-    return { type, castling: castling as Castling };
+    return { type, castling: castling as Castling } as CastlingMove;
   }
 
   const from = fromSquare as BoardSquare;
@@ -97,11 +97,11 @@ export const createMove = (
 
   // Promoting?
   if (promoteTo) {
-    const type = MoveType.Promotion;
-    return { type, from, to, promoteTo };
+    const type = MoveType.PawnPromotion;
+    return { type, from, to, promoteTo } as PawnPromotionMove;
   }
 
   // Just a basic move
   const type = MoveType.Basic;
-  return { type, from, to };
+  return { type, from, to } as BasicMove;
 };

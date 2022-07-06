@@ -1,10 +1,10 @@
-import { assertBoardState } from '@/utils';
-import { createMove, Move } from '@/move';
-import { createGame, createGameFromPosition, updateGame } from '@/state';
-import { BoardSquare } from '@/board';
-import { Figure } from '@/piece';
-import { Color } from '@/common';
-import { fromTextGrid } from '@/serialization';
+import { assertBoardState } from '../utils';
+import { createMove, Move } from '../move';
+import { createGame, createGameFromPosition, updateGame } from '../state';
+import { BoardSquare } from '../board';
+import { Figure } from '../piece';
+import { Color } from '../common';
+import { fromTextGrid } from '../serialization';
 
 describe('Castling', () => {
 

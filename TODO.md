@@ -12,7 +12,6 @@
 - [ ] ESLint
 - [ ] Husky
 - [x] Rename "plain grid"?
-- [x] Adjust import paths with @/*
 - [ ] Validate win conditions
 - [ ] Validate checkmate
 - [x] Change game state based on FEN information https://en.wikipedia.org/wiki/Forsyth%E2%80%93Edwards_Notation

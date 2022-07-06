@@ -4,7 +4,4 @@ module.exports = {
     testEnvironment: 'node',
     verbose: true,
     maxWorkers: '50%',
-    moduleNameMapper: {
-        '^@/(.*)$': '<rootDir>/src/$1',
-    },
 }

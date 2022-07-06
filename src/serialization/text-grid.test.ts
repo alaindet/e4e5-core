@@ -1,5 +1,5 @@
-import { AbstractPlacedPiece } from '@/piece';
-import { getInitialPosition } from '@/initial';
+import { AbstractPlacedPiece } from '../piece';
+import { getInitialPosition } from '../initial';
 import { fromTextGrid } from './text-grid';
 
 describe('Plain Grid serialization', () => {

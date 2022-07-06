@@ -1,6 +1,6 @@
-import { getToSquare } from '@/board';
-import { Move, MoveType, BasicMove, PawnDoubleStepMove, PawnEnPassantMove } from '@/move';
-import { Piece, Figure, getPawnDirections } from '@/piece';
+import { getToSquare } from '../board';
+import { Move, MoveType, BasicMove, PawnDoubleStepMove, PawnEnPassantMove } from '../move';
+import { Piece, Figure, getPawnDirections } from '../piece';
 import { GameState } from './types';
 
 // Specifies a basic move as a pawn double step or en passant, if possibile

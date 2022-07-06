@@ -1,9 +1,9 @@
-import { BoardCoordinates, BoardCoordinate, getSquareFromCoordinates, BoardSquare } from '@/board';
-import { Color } from '@/common';
-import { createGameFromPosition, GameState, inCheck } from '@/state';
-import { GamePosition } from '@/piece';
+import { BoardCoordinates, BoardCoordinate, getSquareFromCoordinates, BoardSquare } from '../board';
+import { Color } from '../common';
+import { createGameFromPosition, GameState, inCheck } from '../state';
+import { GamePosition } from '../piece';
+import { Castling } from '../castling';
 import { getPieceLetters, PieceLetter } from './piece-letters';
-import { Castling } from '@/castling';
 
 export function toNumber(input: string): number | null {
   const result = +input;
@@ -66,7 +66,7 @@ export function fromFENCastlingAvailability(
   const available = castlings.split('').reduce(
     (tot, letter) => ({ ...tot, [letter]: true }),
     {} as { [letter: string]: boolean },
-  )  
+  )
 
   if (PieceLetter.K in available) {
     availability[Color.White][Castling.KingSide] = true;
@@ -89,15 +89,14 @@ export function fromFENCastlingAvailability(
 
 // https://en.wikipedia.org/wiki/Forsyth%E2%80%93Edwards_Notation
 // Example: 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1'
-export function fromFEN (fen: string): GameState {
-  // TODO: Add this missing data to game
+export function fromFEN(fen: string): GameState {
   const [board, active, castling, enPassant, halfMoves, fullMoves] = fen.split(' ');
   const position = fromFENBoard(board);
   const game = createGameFromPosition(position, fromFENActive(active));
 
-  game.castlingAvailability = fromFENCastlingAvailability(castling);
-  game.inCheck = inCheck(game);
-  game.enPassant = fromFENEnPassant(enPassant);
+  // game.castlingAvailability = fromFENCastlingAvailability(castling);
+  // game.inCheck = inCheck(game);
+  // game.enPassant = fromFENEnPassant(enPassant);
   game.halfMovesCount = +halfMoves;
   game.movesCount = +fullMoves;
 

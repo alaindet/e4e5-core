@@ -1,10 +1,10 @@
-import { BasicMove, Move, MoveType } from '@/move';
-import { getToSquare } from '@/board';
-import { performCastling, updateCastlingAvailability } from '@/castling';
-import { canMoveTo } from '@/movements';
-import { getPawnDirections, Piece } from '@/piece';
-import { Color, getOppositeColor } from '@/common';
-import { removeAt } from '@/utils';
+import { BasicMove, Move, MoveType } from '../move';
+import { getToSquare } from '../board';
+import { performCastling, updateCastlingAvailability } from '../castling';
+import { canMoveTo } from '../movements';
+import { getPawnDirections, Piece } from '../piece';
+import { Color, getOppositeColor } from '../common';
+import { removeAt } from '../utils';
 import { IllegalMoveError, NoPieceFoundError, PieceOwnershipError } from './errors';
 import { GameState } from './types';
 import { upgradePawnMove } from './upgrade-pawn-move';

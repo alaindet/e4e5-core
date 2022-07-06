@@ -1,7 +1,7 @@
-import { Color, getOppositeColor } from '@/common';
-import { getInitialPosition } from '@/initial';
-import { Move } from '@/move';
-import { GamePosition, getPieceFromToken, getPieceId, getPiecesChecklist, getPieceToken, PlacedPiece } from '@/piece';
+import { Color, getOppositeColor } from '../common';
+import { getInitialPosition } from '../initial';
+import { Move } from '../move';
+import { GamePosition, getPieceFromToken, getPieceId, getPiecesChecklist, getPieceToken, PlacedPiece } from '../piece';
 import { getGameDefaults } from './default-state';
 import { forceMove } from './force-move';
 import { GameState } from './types';
@@ -40,6 +40,8 @@ export function createGameFromPosition(
   if (inCheck(game, getOppositeColor(game.turn))) {
     throw new IllegalGameStateError('Illegal position provided');
   }
+
+  game.inCheck = inCheck(game, game.turn);
 
   return game;
 };

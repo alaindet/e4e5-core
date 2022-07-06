@@ -1,7 +1,7 @@
-import { Color } from '@/common';
-import { Figure, PlacedPiece } from '@/piece';
-import { GameState } from '@/state';
-import { canMoveTo } from '@/movements';
+import { Color } from '../common';
+import { Figure, PlacedPiece } from '../piece';
+import { GameState } from '../state';
+import { canMoveTo } from '../movements';
 
 export class IllegalGameStateError extends Error {
   constructor(message: string) {

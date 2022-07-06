@@ -51,40 +51,40 @@ export class NoSquareFoundError extends Error {
   }
 }
 
-export const getEmptyBoard = (): BoardState => {
+export function getEmptyBoard(): BoardState {
   return Object.values(BoardSquare).reduce((board, square) => {
     board[square] = null;
     return board;
   }, {} as BoardState);
-};
+}
 
-export const getSquareCoordinates = (square: BoardSquare): BoardCoordinates => {
+export function getSquareCoordinates(square: BoardSquare): BoardCoordinates {
   // In UTF-16 => A = 65, B = 66, ..., H = 72
   const file = square[0].charCodeAt(0) - 64 as BoardCoordinate;
   const rank = +square[1];
   return [file, rank as BoardCoordinate];
-};
+}
 
-export const getSquareFromCoordinates = (
+export function getSquareFromCoordinates(
   _file: BoardCoordinate,
   rank: BoardCoordinate,
-): BoardSquare => {
+): BoardSquare {
   // In UTF-16 => A = 65, B = 66, ..., H = 72
   const file = String.fromCharCode(_file + 64);
   return `${file}${rank}` as BoardSquare;
-};
+}
 
-// Ex.: 'B3' => 2 + 5 is odd => light square
-export const getSquareColor = (square: BoardSquare): Color => {
+// Ex.: 'B3' => 2 + 5 is odd => white square
+export function getSquareColor (square: BoardSquare): Color {
   const [file, rank] = getSquareCoordinates(square);
   return (file + rank) % 2 === 0 ? Color.Black : Color.White;
-};
+}
 
-export const getToSquare = (
+export function getToSquare(
   square: BoardSquare,
   dir: BoardDirection,
   amount = 1,
-): BoardSquare => {
+): BoardSquare {
 
   if (Math.abs(amount) > 8 - 1) {
     throw new NoSquareFoundError(`You cannot move by ${amount} squares`);
@@ -116,14 +116,14 @@ export const getToSquare = (
   );
 };
 
-export const getSquaresDistance = (a: BoardSquare, b: BoardSquare): number => {
+export function getSquaresDistance(a: BoardSquare, b: BoardSquare): number {
   const [aFile, aRank] = getSquareCoordinates(a);
   const [bFile, bRank] = getSquareCoordinates(b);
   return Math.max(Math.abs(aFile - bFile), Math.abs(aRank - bRank));
-};
+}
 
-export const getSquaresDiff = (a: BoardSquare, b: BoardSquare): [number, number] => {
+export function getSquaresDiff(a: BoardSquare, b: BoardSquare): [number, number] {
   const [aFile, aRank] = getSquareCoordinates(a);
   const [bFile, bRank] = getSquareCoordinates(b);
   return [bFile - aFile, bRank - aRank];
-};
+}

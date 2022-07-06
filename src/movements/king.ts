@@ -1,11 +1,11 @@
 import { BoardSquare, BoardState, getSquaresDistance } from '../board';
 import { AbstractPlacedPiece, PlacedPiece } from '../piece';
 
-export const canKingMoveTo = (
+export function canKingMoveTo(
   piece: PlacedPiece | AbstractPlacedPiece,
   square: BoardSquare,
   board: BoardState,
-): boolean => {
+): boolean {
 
   // Too far?
   if (getSquaresDistance(piece.square, square) > 1) {
@@ -18,4 +18,4 @@ export const canKingMoveTo = (
   }
 
   return true;
-};
+}

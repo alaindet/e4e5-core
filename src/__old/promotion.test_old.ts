@@ -7,7 +7,7 @@ import { Color } from '../common';
 
 describe('Castling', () => {
 
-  it ('should perform king-side castling for light', () => {
+  it ('should perform king-side castling for white', () => {
 
     const moves: Move[] = [
       createMove('E2', 'E4'), createMove('E7', 'E5'),

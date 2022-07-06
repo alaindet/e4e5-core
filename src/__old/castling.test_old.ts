@@ -1,14 +1,14 @@
-import { assertBoardState } from '../utils';
-import { createMove, Move } from '../move';
-import { createGame, createGameFromPosition, updateGame } from '../state/state';
-import { BoardSquare } from '../board';
-import { Figure } from '../piece';
-import { Color } from '../common';
-import { fromPlainGrid } from '../serialization/plain-grid';
+import { assertBoardState } from '@/utils';
+import { createMove, Move } from '@/move';
+import { createGame, createGameFromPosition, updateGame } from '@/state';
+import { BoardSquare } from '@/board';
+import { Figure } from '@/piece';
+import { Color } from '@/common';
+import { fromTextGrid } from '@/serialization';
 
 describe('Castling', () => {
 
-  it('should perform king-side castling for light', () => {
+  it('should perform king-side castling for white', () => {
 
     const moves: Move[] = [
       createMove('E2', 'E4'), createMove('E7', 'E5'),
@@ -27,9 +27,9 @@ describe('Castling', () => {
     ]);
   });
 
-  it('should perform queen-side castling for dark', () => {
+  it('should perform queen-side castling for black', () => {
 
-    const position = fromPlainGrid(`
+    const position = fromTextGrid(`
       |r| | | |k| | | |
       | | | | | | | | |
       | | | | | | | | |

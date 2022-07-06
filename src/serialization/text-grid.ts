@@ -3,7 +3,7 @@ import { Color } from '../common';
 import { GamePosition, AbstractPiece, Figure } from '../piece';
 
 /*
-Example of a plain grid
+Example of a text grid
 
 |r|n|b|q|k|b|n|r|
 |p|p|p|p|p|p|p|p|
@@ -14,7 +14,7 @@ Example of a plain grid
 |P|P|P|P|P|P|P|P|
 |R|N|B|Q|K|B|N|R|
 */
-export const fromPlainGrid = (view: string): GamePosition => {
+export function fromTextGrid(view: string): GamePosition {
 
   const EMPTY_SQUARE = ' ';
   const PIECES: { [s: string]: AbstractPiece } = {
@@ -53,4 +53,4 @@ export const fromPlainGrid = (view: string): GamePosition => {
   });
 
   return pos;
-};
+}

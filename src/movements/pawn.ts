@@ -3,11 +3,11 @@ import { BoardSquare, BoardState, getToSquare } from '../board';
 import { AbstractPlacedPiece, getPawnDirections, PlacedPiece } from '../piece';
 
 // Skip en-passant for now
-export const canPawnMoveTo = (
+export function canPawnMoveTo(
   piece: PlacedPiece | AbstractPlacedPiece,
   square: BoardSquare,
   board: BoardState,
-): boolean => {
+): boolean {
 
   const dirs = getPawnDirections(piece.color);
   const ahead = getToSquare(piece.square, dirs.ahead, 1);
@@ -44,4 +44,4 @@ export const canPawnMoveTo = (
   }
 
   return true;
-};
+}

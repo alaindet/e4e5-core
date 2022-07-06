@@ -10,7 +10,7 @@ export class IllegalGameStateError extends Error {
   }
 }
 
-export const inCheck = (game: GameState, color?: Color): boolean => {
+export function inCheck(game: GameState, color?: Color): boolean {
 
   const checkedColor = color ?? game.turn;
   let king: PlacedPiece | null = null;
@@ -43,4 +43,4 @@ export const inCheck = (game: GameState, color?: Color): boolean => {
 
   // King is safe
   return false;
-};
+}

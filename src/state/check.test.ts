@@ -1,23 +1,23 @@
-import { fromPlainGrid } from '../serialization';
-import { Color } from '../common';
+import { Color } from '@/common';
+import { fromTextGrid } from '@/serialization';
 import { createGameFromPosition } from './state';
 import { inCheck } from './check';
 
 const assertInCheck = (color: Color, positionView: string) => {
-  const position = fromPlainGrid(positionView);
+  const position = fromTextGrid(positionView);
   const game = createGameFromPosition(position, color);
   expect(inCheck(game)).toBe(true);
 };
 
 const assertNotInCheck = (color: Color, positionView: string) => {
-  const position = fromPlainGrid(positionView);
+  const position = fromTextGrid(positionView);
   const game = createGameFromPosition(position, color);
   expect(inCheck(game)).toBe(false);
 };
 
 describe('Validate king check status', () => {
 
-  it('light king checked by dark queen', () => {
+  it('white king checked by black queen', () => {
     assertInCheck(Color.Black, `
       | | | | | | | | |
       | | | | | | | | |
@@ -30,7 +30,7 @@ describe('Validate king check status', () => {
     `);
   });
 
-  it('light king checked by dark knight', () => {
+  it('white king checked by black knight', () => {
     assertInCheck(Color.Black, `
       | | | | | | | | |
       | | | | | | | | |
@@ -43,7 +43,7 @@ describe('Validate king check status', () => {
     `);
   });
 
-  it('light king checked by dark pawn', () => {
+  it('white king checked by black pawn', () => {
     assertInCheck(Color.Black, `
       | | | | | | | | |
       | | | | | | | | |
@@ -56,7 +56,7 @@ describe('Validate king check status', () => {
     `);
   });
 
-  it('light king is safe', () => {
+  it('white king is safe', () => {
     assertNotInCheck(Color.Black, `
       | | | | | | | | |
       | | | | | | | |b|
@@ -69,7 +69,7 @@ describe('Validate king check status', () => {
     `);
   });
 
-  it('dark king checked by light rook', () => {
+  it('black king checked by white rook', () => {
     assertInCheck(Color.White, `
       | | | | | | | | |
       | | | | | | | | |
@@ -82,7 +82,7 @@ describe('Validate king check status', () => {
     `);
   });
 
-  it('dark king checked by light pawn', () => {
+  it('black king checked by white pawn', () => {
     assertInCheck(Color.White, `
       | | | | | | | | |
       | | | | | | | | |
@@ -95,7 +95,7 @@ describe('Validate king check status', () => {
     `);
   });
 
-  it('dark king is safe', () => {
+  it('black king is safe', () => {
     assertNotInCheck(Color.White, `
       | | |B| | | | | |
       | | | | | | | | |

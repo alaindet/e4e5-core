@@ -5,12 +5,12 @@ import { GamePosition } from '@/piece';
 import { getPieceLetters, PieceLetter } from './piece-letters';
 import { Castling } from '@/castling';
 
-export const toNumber = (input: string): number | null => {
+export function toNumber(input: string): number | null {
   const result = +input;
   return isNaN(result) ? null : result;
-};
+}
 
-export const fromFENBoard = (board: string): GamePosition => {
+export function fromFENBoard (board: string): GamePosition {
   const pos: GamePosition = [];
   const letterMap = getPieceLetters().fromLetters as any;
   let [rank, file] = [8, 1] as BoardCoordinates;
@@ -34,7 +34,7 @@ export const fromFENBoard = (board: string): GamePosition => {
   });
 
   return pos;
-};
+}
 
 export function fromFENActive(active: string): Color {
   return active === 'w' ? Color.White : Color.Black;

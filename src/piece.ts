@@ -43,10 +43,10 @@ export type AbstractPieceToken = `${Figure}${Color}`;
 
 export type PiecesChecklist = Map<AbstractPieceToken, number>;
 
-export const getPawnDirections = (color: Color): {
+export function getPawnDirections(color: Color): {
   ahead: BoardDirection;
   capture: [BoardDirection, BoardDirection];
-} => {
+} {
   if (color === Color.White) {
     return {
       ahead: BoardDirection.Top,
@@ -58,9 +58,9 @@ export const getPawnDirections = (color: Color): {
     ahead: BoardDirection.Bottom,
     capture: [BoardDirection.DiagonalBottomLeft, BoardDirection.DiagonalBottomRight],
   };
-};
+}
 
-export const getPiecesChecklist = (): PiecesChecklist => {
+export function getPiecesChecklist(): PiecesChecklist {
   return new Map<AbstractPieceToken, number>([
     [`${Figure.King}${Color.White}`, 1],
     [`${Figure.Queen}${Color.White}`, 1],
@@ -75,19 +75,19 @@ export const getPiecesChecklist = (): PiecesChecklist => {
     [`${Figure.Rook}${Color.Black}`, 2],
     [`${Figure.Pawn}${Color.Black}`, 8],
   ]);
-};
+}
 
-export const getPieceId = (piece: AbstractPiece): PieceId => {
+export function getPieceId(piece: AbstractPiece): PieceId {
   return Math.random();
-};
+}
 
-export const getPieceToken = (piece: AbstractPiece): AbstractPieceToken => {
+export function getPieceToken(piece: AbstractPiece): AbstractPieceToken {
   return `${piece.figure}${piece.color}`;
-};
+}
 
-export const getPieceFromToken = (token: AbstractPieceToken): Piece => {
+export function getPieceFromToken(token: AbstractPieceToken): Piece {
   const figure = token[0] as Figure;
   const color = token[1] as Color;
   const id = getPieceId({ figure, color });
   return { id, figure, color };
-};
+}

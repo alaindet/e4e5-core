@@ -90,7 +90,7 @@ const renderBoard = (board: BoardState): string => {
   .join('\n');
 };
 
-export const viewGame = (game: GameState): void => {
+export function viewGame(game: GameState): void {
   const board = renderBoard(game.board);
   console.log(board);
-};
+}

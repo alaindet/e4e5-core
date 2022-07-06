@@ -3,11 +3,11 @@ import { AbstractPlacedPiece, PlacedPiece } from '../piece';
 
 // Short L movement example: A1 => B3
 // Long L movement example: A1 => C2
-export const canKnightMoveTo = (
+export function canKnightMoveTo(
   piece: PlacedPiece | AbstractPlacedPiece,
   square: BoardSquare,
   board: BoardState,
-): boolean => {
+): boolean {
 
   const [fileDiff, rankDiff] = getSquaresDiff(piece.square, square);
   const [absFileDiff, absRankDiff] = [Math.abs(fileDiff), Math.abs(rankDiff)];
@@ -25,4 +25,4 @@ export const canKnightMoveTo = (
   }
 
   return true;
-};
+}

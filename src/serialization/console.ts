@@ -35,11 +35,11 @@ export enum ConsoleColorBackground {
   White = "\x1b[47m",
 }
 
-export const logWithColor = (
+export function logWithColor(
   message: string,
   text: ConsoleColorText | null = null,
   background: ConsoleColorBackground | null = null,
-): string => {
+): string {
 
   if (text === null && background === null) {
     return message;
@@ -50,4 +50,4 @@ export const logWithColor = (
   const reset = ConsoleColorCommon.Reset;
 
   return `${backgroundFmt}${textFmt}${message}${reset}`;
-};
+}

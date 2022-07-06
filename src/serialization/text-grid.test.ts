@@ -1,6 +1,6 @@
-import { AbstractPlacedPiece } from '../piece';
-import { getInitialPosition } from '../initial';
-import { fromPlainGrid } from './plain-grid';
+import { AbstractPlacedPiece } from '@/piece';
+import { getInitialPosition } from '@/initial';
+import { fromTextGrid } from './text-grid';
 
 describe('Plain Grid serialization', () => {
   it('should deserialize starting position from plain grid format', () => {
@@ -21,7 +21,7 @@ describe('Plain Grid serialization', () => {
     `;
 
     const expected = getInitialPosition().map(flatten).sort();
-    const result = fromPlainGrid(input).map(flatten).sort();
+    const result = fromTextGrid(input).map(flatten).sort();
 
     expect(result).toEqual(expected);
   });

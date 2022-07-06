@@ -11,16 +11,15 @@
 - [ ] doc
 - [ ] ESLint
 - [ ] Husky
-- [ ] Rename "plain grid"?
-- [ ] Adjust import paths with @/*
+- [x] Rename "plain grid"?
+- [x] Adjust import paths with @/*
 - [ ] Validate win conditions
 - [ ] Validate checkmate
-- [ ] Change game state based on FEN information https://en.wikipedia.org/wiki/Forsyth%E2%80%93Edwards_Notation
+- [x] Change game state based on FEN information https://en.wikipedia.org/wiki/Forsyth%E2%80%93Edwards_Notation
 - [ ] Add FEN serialization
-- [ ] Add history to game state
+- [x] Add history to game state
 - [x] Convert Color Enum to Color { White = 'w', Black = 'b' }
 - [ ] Use PieceLetter into viewGame()
 - [x] Move viewGame() into serialization
 - [ ] Update README.md
-- [ ] Rename "light" to "white" and "dark" to "black"
-- [ ] Change all anonymous exported functions as proper functions
+- [x] Change all anonymous exported functions as proper functions

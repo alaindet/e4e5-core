@@ -1,3 +1,3 @@
 export * from './fen';
-export * from './plain-grid';
+export * from './text-grid';
 export * from './view';

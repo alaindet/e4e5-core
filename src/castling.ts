@@ -19,10 +19,10 @@ export interface CastlingSquares {
 
 export type CastlingLabel = 'O-O' | 'O-O-O';
 
-export const getCastlingSquares = (
+export function getCastlingSquares(
   color: Color,
   castling: Castling,
-): CastlingSquares => {
+): CastlingSquares {
   if (color === Color.White && castling === Castling.KingSide) {
     return {
       kingFrom: BoardSquare.E1,
@@ -53,7 +53,7 @@ export const getCastlingSquares = (
     };
   }
 
-  // Color dark, castling queen-side
+  // Color black, castling queen-side
   return {
     kingFrom: BoardSquare.E8,
     rookFrom: BoardSquare.A8,
@@ -61,14 +61,14 @@ export const getCastlingSquares = (
     rookTo: BoardSquare.D8,
     inBetween: [BoardSquare.D8, BoardSquare.C8, BoardSquare.B8],
   };
-};
+}
 
 // This does not account for threats
-export const isCastlingAvailable = (
+export function isCastlingAvailable(
   game: GameState,
   color: Color,
   castling: Castling,
-): boolean => {
+): boolean {
 
   const squares = getCastlingSquares(color, castling);
 
@@ -112,7 +112,7 @@ export const isCastlingAvailable = (
   }
 
   return true;
-};
+}
 
 export function performCastling(game: GameState, move: CastlingMove): GameState {
 
@@ -125,7 +125,6 @@ export function performCastling(game: GameState, move: CastlingMove): GameState 
   
   return game;
 }
-
 
 // This does not account for checking
 export function updateCastlingAvailability(game: GameState): GameState {
@@ -143,4 +142,4 @@ export function updateCastlingAvailability(game: GameState): GameState {
   });
 
   return game;
-};
+}

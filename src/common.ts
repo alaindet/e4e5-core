@@ -3,6 +3,6 @@ export enum Color {
   Black = 'b',
 }
 
-export const getOppositeColor = (color: Color): Color => {
+export function getOppositeColor(color: Color): Color {
   return color === Color.Black ? Color.White : Color.Black;
-};
+}

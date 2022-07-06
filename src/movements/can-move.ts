@@ -13,11 +13,11 @@ import { canRookMoveTo } from './rook';
  * For example, according to this function a king can move into a threatened square
  * En passant is not managed either as it relies on game state
  */
-export const canMoveTo = (
+export function canMoveTo(
   piece: PlacedPiece | AbstractPlacedPiece,
   square: BoardSquare,
   board: BoardState,
-): boolean => {
+): boolean {
 
   if (piece.square === square) {
     return false;
@@ -37,4 +37,4 @@ export const canMoveTo = (
     case Figure.Rook:
       return canRookMoveTo(piece, square, board);
   }
-};
+}

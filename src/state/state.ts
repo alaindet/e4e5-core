@@ -7,9 +7,9 @@ import { forceMove } from './force-move';
 import { GameState } from './types';
 import { inCheck, IllegalGameStateError } from './check';
 
-export const createGame = (): GameState => {
+export function createGame(): GameState {
   return createGameFromPosition(getInitialPosition());
-};
+}
 
 export function createGameFromPosition(
   position: GamePosition,

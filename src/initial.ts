@@ -2,7 +2,7 @@ import { BoardSquare } from './board';
 import { Color } from './common';
 import { Figure, GamePosition } from './piece';
 
-export const getInitialPosition = (): GamePosition => {
+export function getInitialPosition(): GamePosition {
   return [
     { figure: Figure.King, color: Color.White, square: BoardSquare.E1 },
     { figure: Figure.Queen, color: Color.White, square: BoardSquare.D1 },
@@ -37,4 +37,4 @@ export const getInitialPosition = (): GamePosition => {
     { figure: Figure.Pawn, color: Color.Black, square: BoardSquare.G7 },
     { figure: Figure.Pawn, color: Color.Black, square: BoardSquare.H7 },
   ];
-};
+}

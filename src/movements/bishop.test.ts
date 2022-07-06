@@ -1,11 +1,11 @@
-import { Color } from '../common';
-import { GamePosition, PlacedPiece } from '../piece';
-import { BoardSquare } from '../board';
-import { createGameFromPosition } from '../state/state';
+import { Color } from '@/common';
+import { GamePosition, PlacedPiece } from '@/piece';
+import { BoardSquare } from '@/board';
+import { createGameFromPosition } from '@/state';
+import { fromTextGrid } from '@/serialization';
 import { canMoveTo } from './can-move';
-import { fromPlainGrid } from '../serialization/plain-grid';
 
-const testPosition: GamePosition = fromPlainGrid(`
+const testPosition: GamePosition = fromTextGrid(`
   | | | | |k| | | |
   | | | | | | | | |
   | | | | | | | | |

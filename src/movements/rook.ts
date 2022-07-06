@@ -1,11 +1,11 @@
 import { BoardSquare, BoardState, getSquareCoordinates, getSquareFromCoordinates, getSquaresDiff } from '../board';
 import { AbstractPlacedPiece, PlacedPiece } from '../piece';
 
-export const canRookMoveTo = (
+export function canRookMoveTo(
   piece: PlacedPiece | AbstractPlacedPiece,
   square: BoardSquare,
   board: BoardState,
-): boolean => {
+): boolean {
 
   const [fileDiff, rankDiff] = getSquaresDiff(piece.square, square);
 
@@ -39,4 +39,4 @@ export const canRookMoveTo = (
   }
 
   return true;
-};
+}

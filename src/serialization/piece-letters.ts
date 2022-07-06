@@ -16,11 +16,10 @@ export enum PieceLetter {
   p = 'p',
 }
 
-export const getPieceLetters = (): {
+export function getPieceLetters(): {
   fromLetters: { [letter in PieceLetter]: AbstractPiece };
-  // toLetters: { [token in AbstractPieceToken]: PieceLetter };
   toLetters: { [token: string]: PieceLetter };
-} => {
+} {
   return {
     fromLetters: {
       [PieceLetter.K]: { figure: Figure.King, color: Color.White },

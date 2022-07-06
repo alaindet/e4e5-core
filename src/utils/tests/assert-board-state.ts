@@ -1,10 +1,10 @@
 import { BoardSquare, BoardState } from '../../board';
 import { AbstractPiece } from '../../piece';
 
-export const assertBoardState = (
+export function assertBoardState(
   board: BoardState,
   testCases: [BoardSquare, AbstractPiece | null][],
-) => {
+) {
   testCases.forEach(testCase => {
     const [input, expected] = testCase;
     if (expected === null) {
@@ -14,4 +14,4 @@ export const assertBoardState = (
       expect(board[input]?.color).toBe(expected.color);
     }
   });
-};
+}

@@ -2,7 +2,7 @@ import { BasicMove, Move, MoveType } from '../move';
 import { getToSquare } from '../board';
 import { performCastling, updateCastlingAvailability } from '../castling';
 import { canMoveTo } from '../movements';
-import { getPawnDirections, Piece } from '../piece';
+import { Figure, getPawnDirections, Piece } from '../piece';
 import { Color, getOppositeColor } from '../common';
 import { removeAt } from '../utils';
 import { IllegalMoveError, NoPieceFoundError, PieceOwnershipError } from './errors';
@@ -13,17 +13,19 @@ import { upgradePawnMove } from './upgrade-pawn-move';
 // It ignores threats, win conditions, etc.
 export function forceMove(game: GameState, _move: Move): GameState {
 
+  let didCapture = false;
+
   // Castling?
   if (_move.type === MoveType.Castling) {
     return performCastling(game, _move);
   }
 
-  // Illegal move
+  // Illegal move: no piece found
   if (game.board[_move.from] === null) {
     throw new NoPieceFoundError(`No piece found on ${_move.from}`);
   }
 
-  // Illegal move
+  // Illegal move: moving opponent's piece
   if (game.board[_move.from]?.color !== game.turn) {
     throw new PieceOwnershipError('You cannot move opponent\'s pieces');
   }
@@ -42,6 +44,7 @@ export function forceMove(game: GameState, _move: Move): GameState {
   // Capture?
   const toPiece = game.board[to];
   if (toPiece !== null) {
+    didCapture = true;
     game.pieces = game.pieces.filter(p => p.square !== to);
     const { id, figure, color } = toPiece;
     const capturedPiece = { id, figure, color };
@@ -61,6 +64,7 @@ export function forceMove(game: GameState, _move: Move): GameState {
 
   // En passant?
   if (move.type === MoveType.PawnEnPassant) {
+    didCapture = true;
     const index = game.pieces.findIndex(p => p.square === game.enPassant);
     const { id, figure, color } = game.pieces[index];
     const capturedPiece = { id, figure, color };
@@ -82,7 +86,11 @@ export function forceMove(game: GameState, _move: Move): GameState {
   }
 
   // Update half move counter
-  game.halfMovesCount++;
+  if (didCapture || game.board[from]?.figure === Figure.Pawn) {
+    game.halfMovesCount = 1;
+  } else {
+    game.halfMovesCount++;
+  }
 
   // Update move counter
   if (game.turn === Color.Black) {

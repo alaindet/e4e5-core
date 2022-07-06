@@ -51,15 +51,21 @@ export function createGameFromPosition(
 
 export function updateGame(game: GameState, move: Move): GameState {
 
-  const nextGame = forceMove(game, move);
-  const willBeInCheck = inCheck(nextGame, game.turn);
-
-  if (willBeInCheck) {
-    throw new IllegalGameStateError('Illegal game state');
+  // TODO: Check for win conditions
+  if (game.inCheck) {
+    // ...
   }
 
-  // TODO: Check for win conditions
+  const nextGame = forceMove(game, move);
+
+  const willBeInCheck = inCheck(nextGame, game.turn);
+  if (willBeInCheck) {
+    throw new IllegalGameStateError('Cannot result in check');
+  }
+
   // TODO: Check for temporary checks while castling
+
+  // TODO: Update check state
 
   return nextGame;
 };

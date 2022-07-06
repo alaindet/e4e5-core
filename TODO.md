@@ -22,3 +22,4 @@
 - [x] Move viewGame() into serialization
 - [ ] Update README.md
 - [x] Change all anonymous exported functions as proper functions
+- [ ] Check win conditions: half moves clock, checkmate, draw

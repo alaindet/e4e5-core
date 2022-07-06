@@ -1,12 +1,11 @@
 import { Color } from '../common';
 import { fromTextGrid } from '../serialization';
 import { createGameFromPosition } from './state';
-import { inCheck } from './check';
 
 const assertInCheck = (color: Color, positionView: string) => {
   const position = fromTextGrid(positionView);
   const game = createGameFromPosition(position, color);
-  expect(inCheck(game)).toBe(true);
+  expect(game.inCheck).toBe(true);
 };
 
 const assertNotInCheck = (color: Color, positionView: string) => {
@@ -18,7 +17,7 @@ const assertNotInCheck = (color: Color, positionView: string) => {
 describe('Validate king check status', () => {
 
   it('white king checked by black queen', () => {
-    assertInCheck(Color.Black, `
+    assertInCheck(Color.White, `
       | | | | | | | | |
       | | | | | | | | |
       | | | | | | | | |
@@ -31,7 +30,7 @@ describe('Validate king check status', () => {
   });
 
   it('white king checked by black knight', () => {
-    assertInCheck(Color.Black, `
+    assertInCheck(Color.White, `
       | | | | | | | | |
       | | | | | | | | |
       | | | | | | | | |
@@ -44,7 +43,7 @@ describe('Validate king check status', () => {
   });
 
   it('white king checked by black pawn', () => {
-    assertInCheck(Color.Black, `
+    assertInCheck(Color.White, `
       | | | | | | | | |
       | | | | | | | | |
       | | | | | | | | |
@@ -56,22 +55,21 @@ describe('Validate king check status', () => {
     `);
   });
 
-  // TODO
-  // it('white king is safe', () => {
-  //   assertNotInCheck(Color.Black, `
-  //     | | | | | | | | |
-  //     | | | | | | | |b|
-  //     | | | | | | | | |
-  //     | | |k|n| |B| | |
-  //     | | | | |K| |R|r|
-  //     | | | | |Q| | | |
-  //     | | | | |q| | | |
-  //     | | | | | | | | |
-  //   `);
-  // });
+  it('white king is safe', () => {
+    assertNotInCheck(Color.White, `
+      | | | | | | | | |
+      | | | | | | | |b|
+      | | | | | | | | |
+      | | |k| | |B| | |
+      | | | |n|K| |R|r|
+      | | | | |Q| | | |
+      | | | | |q| | | |
+      | | | | | | | | |
+    `);
+  });
 
   it('black king checked by white rook', () => {
-    assertInCheck(Color.White, `
+    assertInCheck(Color.Black, `
       | | | | | | | | |
       | | | | | | | | |
       | | | | | | | | |
@@ -83,22 +81,21 @@ describe('Validate king check status', () => {
     `);
   });
 
-  // TODO
-  // it('black king checked by white pawn', () => {
-  //   assertInCheck(Color.White, `
-  //     | | | | | | | | |
-  //     | | | | | | | | |
-  //     | | | | | | | |p|
-  //     | | | | | |k| | |
-  //     | | |K| |P| | | |
-  //     | | | |P| | | | |
-  //     | | | | | | | | |
-  //     | | | | | | | | |
-  //   `);
-  // });
+  it('black king checked by white pawn', () => {
+    assertInCheck(Color.Black, `
+      | | | | | | | | |
+      | | | | | | | | |
+      | | | | | | | |p|
+      | | | | | |k| | |
+      | | |K| |P| | | |
+      | | | |P| | | | |
+      | | | | | | | | |
+      | | | | | | | | |
+    `);
+  });
 
   it('black king is safe', () => {
-    assertNotInCheck(Color.White, `
+    assertNotInCheck(Color.Black, `
       | | |B| | | | | |
       | | | | | | | | |
       | | | | |p| | | |

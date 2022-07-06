@@ -26,7 +26,18 @@ export function canPawnMoveTo(
 
   // Capturing?
   let foundSquare: BoardSquare | null = null;
-  const diagonalSquares = dirs.capture.map(d => getToSquare(piece.square, d, 1));
+
+  // Diagonal squares could be out of chessboard!
+  const diagonalSquares = dirs.capture
+    .map(d => {
+      try {
+        return getToSquare(piece.square, d, 1);
+      } catch {
+        return null;
+      }
+    })
+    .filter(square => square !== null);
+
   for (const diagonalSquare of diagonalSquares) {
     if (diagonalSquare === square) {
       foundSquare = diagonalSquare;

@@ -6,6 +6,7 @@ import { getGameDefaults } from './default-state';
 import { forceMove } from './force-move';
 import { GameState } from './types';
 import { inCheck, IllegalGameStateError } from './check';
+import { validateKingsCount, validateCheckState } from './validate';
 
 export function createGame(): GameState {
   return createGameFromPosition(getInitialPosition());
@@ -30,16 +31,18 @@ export function createGameFromPosition(
     game.pieces.push({ ...piece, square, startingSquare: square } as PlacedPiece);
   }
 
-  for (const [token, count] of Array.from(piecesChecklist)) {
+  for (let [token, count] of Array.from(piecesChecklist)) {
     if (count <= 0) continue;
     const piece = getPieceFromToken(token);
     const oppositeColor = getOppositeColor(piece.color);
-    game.capturedPieces[oppositeColor].push(piece);
+    while (count--) {
+      game.capturedPieces[oppositeColor].push(piece);
+    }
   }
 
-  if (inCheck(game, getOppositeColor(game.turn))) {
-    throw new IllegalGameStateError('Illegal position provided');
-  }
+  // Validation
+  validateKingsCount(game);
+  validateCheckState(game);
 
   game.inCheck = inCheck(game, game.turn);
 

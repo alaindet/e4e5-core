@@ -19,12 +19,12 @@ export function inCheck(game: GameState, color?: Color): boolean {
   for (const piece of game.pieces) {
 
     // Attacking piece?
-    if (piece.color === checkedColor  && piece.figure !== Figure.King) {
+    if (piece.color !== checkedColor && piece.figure !== Figure.King) {
       attackingPieces.push(piece);
     }
 
     // King to be checked?
-    if (piece.color !== checkedColor && piece.figure === Figure.King) {
+    if (piece.color === checkedColor && piece.figure === Figure.King) {
       king = piece;
     }
   }

@@ -94,9 +94,9 @@ export function fromFEN(fen: string): GameState {
   const position = fromFENBoard(board);
   const game = createGameFromPosition(position, fromFENActive(active));
 
-  // game.castlingAvailability = fromFENCastlingAvailability(castling);
-  // game.inCheck = inCheck(game);
-  // game.enPassant = fromFENEnPassant(enPassant);
+  game.castlingAvailability = fromFENCastlingAvailability(castling);
+  game.inCheck = inCheck(game);
+  game.enPassant = fromFENEnPassant(enPassant);
   game.halfMovesCount = +halfMoves;
   game.movesCount = +fullMoves;
 

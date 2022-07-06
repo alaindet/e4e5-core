@@ -1,6 +1,22 @@
-import { fromFEN } from './serialization/fen';
+import { createGameFromPosition } from './state';
+import { fromTextGrid } from './serialization';
+import { Color } from './common';
 
-const input = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1';
-const game = fromFEN(input);
+const pos = fromTextGrid(`
+  | | | | | | | | |
+  | | | | | | | | |
+  | | | | | | | | |
+  | | | | | | | | |
+  | | | | | | | | |
+  | | | |k|k| | | |
+  | | | | | | | | |
+  | | | | | |K| | |
+`);
 
-console.log(game);
+try {
+  const game = createGameFromPosition(pos, Color.White);
+  console.log('|||||||||||||||||||||| Game state is ok');
+} catch (err) {
+  console.log('|||||||||||||||||||||| Illegal game state');
+  console.log(err);
+}

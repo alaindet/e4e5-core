@@ -3,6 +3,10 @@ export enum Color {
   Black = 'b',
 }
 
+export const DRAW = 'draw';
+
+export type GameResult = 'draw' | Color;
+
 export function getOppositeColor(color: Color): Color {
   return color === Color.Black ? Color.White : Color.Black;
 }

@@ -7,6 +7,7 @@ import { forceMove } from './force-move';
 import { GameState } from './types';
 import { inCheck, IllegalGameStateError } from './check';
 import { validateKingsCount, validateCheckState } from './validate';
+import { checkEndGame } from './end-game';
 
 export function createGame(): GameState {
   return createGameFromPosition(getInitialPosition());
@@ -51,12 +52,11 @@ export function createGameFromPosition(
 
 export function updateGame(game: GameState, move: Move): GameState {
 
-  // TODO: Check for win conditions
-  if (game.inCheck) {
-    // ...
-  }
-
   const nextGame = forceMove(game, move);
+
+  // TODO: Check for end game
+  const endgame = checkEndGame(nextGame);
+  // ...
 
   const willBeInCheck = inCheck(nextGame, game.turn);
   if (willBeInCheck) {
@@ -65,7 +65,7 @@ export function updateGame(game: GameState, move: Move): GameState {
 
   // TODO: Check for temporary checks while castling
 
-  // TODO: Update check state
+  game.inCheck = inCheck(game, game.turn);
 
   return nextGame;
 };

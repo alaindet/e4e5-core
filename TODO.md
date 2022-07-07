@@ -22,4 +22,7 @@
 - [x] Move viewGame() into serialization
 - [ ] Update README.md
 - [x] Change all anonymous exported functions as proper functions
-- [ ] Check win conditions: half moves clock, checkmate, draw
+- [ ] Check end game conditions: half moves clock, checkmate, draw
+- [ ] Add "resign" move
+- [ ] Add "draw" agreement
+- [ ] Add "result" to game state, lock updateGame and even forceMove if result !== null

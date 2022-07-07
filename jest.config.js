@@ -4,4 +4,5 @@ module.exports = {
     testEnvironment: 'node',
     verbose: true,
     maxWorkers: '50%',
+    modulePathIgnorePatterns: ["__old__"], // Exclude anything containing "__old__"
 }

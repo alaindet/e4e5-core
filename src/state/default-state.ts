@@ -17,6 +17,8 @@ export function getGameDefaults(): GameState {
     halfMovesCount: 0,
     movesCount: 1,
     moves: [],
+    result: null,
+    canProposeDraw: false,
     castlingAvailability: {
       [Color.White]: {
         [Castling.KingSide]: false,

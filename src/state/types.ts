@@ -1,8 +1,8 @@
-import { BoardState, BoardSquare } from 'board';
-import { Castling } from 'castling';
-import { Color } from 'common';
-import { Move } from 'move';
-import { PlacedPiece, Piece } from 'piece';
+import { BoardState, BoardSquare } from '../board';
+import { Castling } from '../castling';
+import { Color, GameResult } from '../common';
+import { Move } from '../move';
+import { PlacedPiece, Piece } from '../piece';
 
 export interface GameState {
   board: BoardState;
@@ -14,6 +14,8 @@ export interface GameState {
   halfMovesCount: number;
   movesCount: number;
   moves: Move[];
+  result: GameResult;
+  canProposeDraw: boolean;
   castlingAvailability: {
     [color in Color]: {
       [castling in Castling]: boolean;

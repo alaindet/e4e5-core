@@ -60,6 +60,23 @@ export function getPawnDirections(color: Color): {
   };
 }
 
+export function getPieceTokens(): Map<[Figure, Color], AbstractPieceToken> {
+  return new Map<[Figure, Color], AbstractPieceToken>([
+    [[Figure.King, Color.White], `${Figure.King}${Color.White}`],
+    [[Figure.Queen, Color.White], `${Figure.Queen}${Color.White}`],
+    [[Figure.Bishop, Color.White], `${Figure.Bishop}${Color.White}`],
+    [[Figure.Knight, Color.White], `${Figure.Knight}${Color.White}`],
+    [[Figure.Rook, Color.White], `${Figure.Rook}${Color.White}`],
+    [[Figure.Pawn, Color.White], `${Figure.Pawn}${Color.White}`],
+    [[Figure.King, Color.Black], `${Figure.King}${Color.Black}`],
+    [[Figure.Queen, Color.Black], `${Figure.Queen}${Color.Black}`],
+    [[Figure.Bishop, Color.Black], `${Figure.Bishop}${Color.Black}`],
+    [[Figure.Knight, Color.Black], `${Figure.Knight}${Color.Black}`],
+    [[Figure.Rook, Color.Black], `${Figure.Rook}${Color.Black}`],
+    [[Figure.Pawn, Color.Black], `${Figure.Pawn}${Color.Black}`],
+  ]);
+}
+
 export function getPiecesChecklist(): PiecesChecklist {
   return new Map<AbstractPieceToken, number>([
     [`${Figure.King}${Color.White}`, 1],

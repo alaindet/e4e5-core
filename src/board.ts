@@ -18,8 +18,14 @@ export type SquareIndex = (
 
 export type Board = SquareContent[];
 
-export function getEmptyBoard(): any[] {
+export type BinaryBoard = boolean[];
+
+export function getEmptyBoard(): Board {
   return new Array(64).fill(null);
+}
+
+export function getEmptyBinaryBoard(): BinaryBoard {
+  return new Array(64).fill(false);
 }
 
 export function getSquareLabels(): SquareLabel[] {

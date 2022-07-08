@@ -1,5 +1,5 @@
-import { SquareIndex } from './board';
 import { Color, Figure } from './common';
+import { SquareIndex } from './board';
 
 export interface AbstractPiece {
   color: Color;
@@ -23,4 +23,8 @@ export interface PlacedPiece extends AbstractPlacedPiece {
   // figure: Figure;
   // squareIndex: number;
   id: number;
+}
+
+export function getPieceId(): number {
+  return Math.floor(Math.random() * 10_000);
 }

@@ -1,7 +1,6 @@
-import { Figure, Color } from '../common';
-import { AbstractPiece } from '../piece';
-import { Board, getEmptyBoard } from '../board';
-import { getPieceLetters } from './piece-letters';
+import { getPieceId } from '../piece';
+import { Board } from '../board';
+import { getPieceLetters, PieceLetter } from './piece-letters';
 
 /*
 Example of a text grid for the initial position
@@ -15,23 +14,16 @@ Example of a text grid for the initial position
 |P|P|P|P|P|P|P|P|
 |R|N|B|Q|K|B|N|R|
 */
-export function fromTextGrid(view: string): Board {
+export function fromTextGrid(textGrid: string): Board {
 
-  const EMPTY_SQUARE = ' ';
-  const PIECES = getPieceLetters().fromLetters;
-  const board = getEmptyBoard();
+  const pieces = getPieceLetters().fromLetters;
 
-  const squares = view
+  return textGrid
     .replace(/^\s*(\|.+?\|)\s*$/gm, '$1') // Remove excess whitespace
-    .replace(/\|/gm, '') // Remove pipes |
-    .split('');
-
-  return squares.map(symbol => {
-    if (symbol === EMPTY_SQUARE) {
-      return null;
-    }
-    const piece: AbstractPiece = PIECES[symbol as PieceLetter];
-
-    return { ...PIECES[symbol as PieceLetter], id: Date.now() };
-  });
+    .replace(/[\|\n]/gm, '') // Remove pipes and newlines
+    .split('')
+    .map(symbol => {
+      if (symbol === ' ') return null;
+      return { ...pieces[symbol as PieceLetter], id: getPieceId() };
+    });
 }

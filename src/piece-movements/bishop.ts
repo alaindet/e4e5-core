@@ -1,13 +1,15 @@
 import { BoardDirection, getToSquare } from '../board-movement';
 import { BinaryBoard, Board, getEmptyBinaryBoard, SquareIndex } from '../board';
+import { Piece } from 'piece';
 
 export function getBishopAvailableSquares(board: Board, index: SquareIndex): (
   | BinaryBoard
   | null
 ) {
+  const { color } = board[index] as Piece;
   const available = getEmptyBinaryBoard();
   available[index] = true;
-  let availableCount = 0;
+  let availableCount = 1;
 
   const dirs: [BoardDirection, number][] = [
     [BoardDirection.AscendingDiagonal, 1],
@@ -16,18 +18,34 @@ export function getBishopAvailableSquares(board: Board, index: SquareIndex): (
     [BoardDirection.DescendingDiagonal, -1],
   ];
 
-  dirs.forEach(([dir, unitTravel]) => {
+  const exploreBranch = (dir: BoardDirection, unitTravel: number) => {
     let travel = unitTravel;
-    let nextSquare = getToSquare(index, dir, travel);
-    while (nextSquare !== null) {
+    
+    while (true) {
+      let nextSquare = getToSquare(index, dir, travel);
+
+      // Done for this branch: either reached border or piece of same color
+      if (nextSquare === null || board[nextSquare]?.color === color) {
+        return;
+      }
+
+      // Found an opposing piece, add capturing square and exit
+      if (board[nextSquare] !== null && board[nextSquare]?.color !== color) {
+        available[nextSquare] = true;
+        availableCount++;
+        return;
+      }
+
+      // Proceed
       available[nextSquare] = true;
       availableCount++;
       travel += unitTravel;
-      nextSquare = getToSquare(index, dir, travel);
     }
-  });
+  };
 
-  if (availableCount === 0) {
+  dirs.forEach(([dir, unitTravel]) => exploreBranch(dir, unitTravel));
+
+  if (availableCount === 1) {
     return null;
   }
 

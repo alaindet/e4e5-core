@@ -1,21 +1,26 @@
-import { getEmptyBinaryBoard, getEmptyBoard } from './board';
-import { Color, Figure } from './common';
-import { getAvailableSquares } from './piece-movements/available-squares';
-import { chunk } from './utils';
+import { SquareLabelEnum } from './board';
+import { getBishopAvailableSquares } from './piece-movements/bishop';
+import { fromTextGrid } from './serialization';
+import { renderBinaryBoard } from './render';
 
-const board = getEmptyBoard();
-const bishop = { id: Date.now(), color: Color.White, figure: Figure.Bishop };
-const index = 35; // D4
-board[35] = bishop;
-const binaryBoard = getAvailableSquares(board, index);
+const board = fromTextGrid(`
+  | | | | | | | | |
+  | | | | |k| | | |
+  | | | | | | | | |
+  | | | | |b| | | |
+  | | | | | | | | |
+  | | | | |K| | | |
+  | | | | | | | | |
+  | | | | | | | | |
+`);
 
-if (binaryBoard === null) {
-  console.log('No squares available');
-  process.exit();
-}
+const result = getBishopAvailableSquares(board, SquareLabelEnum.E5);
 
-chunk(binaryBoard, 8).forEach(line => {
-  console.log(line.map(b => b ? ' X ' : ' - ').join(''));
-});
+console.log(
+  'available squares',
+  result?.filter(s => s).length,
+);
+
+renderBinaryBoard(result);
 
 export {};

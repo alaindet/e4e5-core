@@ -1,7 +1,7 @@
 import { SquareIndex } from './board';
-import { areOnSameDiagonal, areOnSameFile, areOnSameRank } from './board-movement';
+import { areOnSameDiagonal, areOnSameFile, areOnSameRank, BoardDirection, getSquareDeltas, getToSquare } from './board-movement';
 
-describe('Squares relationship validators', () => {
+describe('Squares arrangement validators', () => {
 
   it('should validate squares on the same file', () => {
     const testCases: [[SquareIndex, SquareIndex], boolean][] = [
@@ -62,6 +62,45 @@ describe('Squares relationship validators', () => {
     ];
     testCases.forEach(([[a, b], expected]) => {
       const result = areOnSameDiagonal(a, b);
+      expect(result).toBe(expected);
+    });
+  });
+});
+
+describe('Move around board via instructions', () => {
+  it('should reach existing squares from a square', () => {
+    const testCases: [[SquareIndex, BoardDirection, number], SquareIndex | null][] = [
+      [[18, BoardDirection.Vertical, 1], 10],
+      [[36, BoardDirection.Vertical, 3], 12],
+      [[2, BoardDirection.Vertical, -2], 18],
+      [[2, BoardDirection.Vertical, 2], null],
+      [[60, BoardDirection.Vertical, -14], null],
+      [[42, BoardDirection.Horizontal, 1], 43],
+      [[42, BoardDirection.Horizontal, 0], 42],
+      [[31, BoardDirection.Horizontal, -2], 29],
+      [[31, BoardDirection.Horizontal, 2], null],
+      [[0, BoardDirection.Horizontal, -1], null],
+      [[32, BoardDirection.Horizontal, -1], null],
+      [[56, BoardDirection.AscendingDiagonal, 7], 7],
+      [[36, BoardDirection.AscendingDiagonal, -3], 57],
+      [[36, BoardDirection.AscendingDiagonal, -8], null],
+      [[36, BoardDirection.AscendingDiagonal, -7], null],
+      [[36, BoardDirection.AscendingDiagonal, 10], null],
+      [[36, BoardDirection.AscendingDiagonal, 7], null],
+      [[58, BoardDirection.AscendingDiagonal, -1], null],
+      [[10, BoardDirection.DescendingDiagonal, 1], 3],
+      [[49, BoardDirection.DescendingDiagonal, 4], 28],
+      [[21, BoardDirection.DescendingDiagonal, -3], 42],
+      [[48, BoardDirection.DescendingDiagonal, 2], null],
+      [[37, BoardDirection.DescendingDiagonal, -4], null],
+      [[37, BoardDirection.DescendingDiagonal, -7], null],
+      [[37, BoardDirection.DescendingDiagonal, 7], null],
+      [[37, BoardDirection.DescendingDiagonal, -10], null],
+      [[37, BoardDirection.DescendingDiagonal, 10], null],
+    ];
+    const deltas = getSquareDeltas();
+    testCases.forEach(([[from, dir, amount], expected]) => {
+      const result = getToSquare(from, dir, amount, deltas);
       expect(result).toBe(expected);
     });
   });

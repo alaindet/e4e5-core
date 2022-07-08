@@ -7,6 +7,7 @@ export function getBishopAvailableSquares(board: Board, index: SquareIndex): (
 ) {
   const available = getEmptyBinaryBoard();
   available[index] = true;
+  let availableCount = 0;
 
   const dirs: [BoardDirection, number][] = [
     [BoardDirection.AscendingDiagonal, 1],
@@ -20,10 +21,15 @@ export function getBishopAvailableSquares(board: Board, index: SquareIndex): (
     let nextSquare = getToSquare(index, dir, travel);
     while (nextSquare !== null) {
       available[nextSquare] = true;
+      availableCount++;
       travel += unitTravel;
       nextSquare = getToSquare(index, dir, travel);
     }
   });
+
+  if (availableCount === 0) {
+    return null;
+  }
 
   return available;
 }

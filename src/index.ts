@@ -1,22 +1,21 @@
-import { areOnSameFile } from './board-movement';
-import { SquareIndex } from './board';
+import { getEmptyBinaryBoard, getEmptyBoard } from './board';
+import { Color, Figure } from './common';
+import { getAvailableSquares } from './piece-movements/available-squares';
+import { chunk } from './utils';
 
-const testCases: [[SquareIndex, SquareIndex], boolean][] = [
-  [[2, 34], true],
-  [[0, 56], true],
-  [[0, 8], true],
-  [[7, 15], true],
-  [[12, 60], true],
-  [[19, 27], true],
-  [[2, 31], false],
-  [[0, 63], false],
-  [[0, 1], false],
-  [[5, 12], false],
-  [[42, 36], false],
-];
+const board = getEmptyBoard();
+const bishop = { id: Date.now(), color: Color.White, figure: Figure.Bishop };
+const index = 35; // D4
+board[35] = bishop;
+const binaryBoard = getAvailableSquares(board, index);
 
-testCases.forEach(([[a, b], expected]) => {
-  const result = areOnSameFile(a, b);
-  const outcome = result === expected ? 'passed' : `ERROR: ${a}, ${b}`;
-  console.log(outcome);
+if (binaryBoard === null) {
+  console.log('No squares available');
+  process.exit();
+}
+
+chunk(binaryBoard, 8).forEach(line => {
+  console.log(line.map(b => b ? ' X ' : ' - ').join(''));
 });
+
+export {};

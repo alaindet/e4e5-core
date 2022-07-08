@@ -26,3 +26,7 @@
 - [ ] Add "resign" move
 - [ ] Add "draw" agreement
 - [ ] Add "result" to game state, lock updateGame and even forceMove if result !== null
+
+
+
+- [ ] Use SquareLabelEnum instead of getSquareIndex() and getSquareIndices()

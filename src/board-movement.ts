@@ -19,9 +19,9 @@ export function areOnSameFile(a: SquareIndex, b: SquareIndex): boolean {
 
 export function areOnSameDiagonal(a: SquareIndex, b: SquareIndex): boolean {
   const width = 8;
-  const ascDiff = 1 - width;
-  const descDiff = 1 + width;
-  return (b - a) % ascDiff === 0 || (b - a) % descDiff === 0;
+  const fileDiff = Math.abs(a % width - b % width);
+  const rankDiff = Math.abs(Math.floor(a / width) - Math.floor(b / width));
+  return fileDiff === rankDiff;
 }
 
 export function getSquareDeltas(): { [dir in BoardDirection]: number } {

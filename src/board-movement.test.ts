@@ -54,11 +54,15 @@ describe('Squares arrangement validators', () => {
       [[42, 24], true],
       [[7, 56], true],
       [[56, 7], true],
+      [[27, 13], true],
+      [[10, 37], true],
       [[0, 62], false],
       [[3, 20], false],
       [[13, 21], false],
       [[0, 1], false],
       [[1, 17], false],
+      [[0, 7], false],
+      [[24, 39], false],
     ];
     testCases.forEach(([[a, b], expected]) => {
       const result = areOnSameDiagonal(a, b);
@@ -88,6 +92,7 @@ describe('Move around board via instructions', () => {
       [[36, BoardDirection.AscendingDiagonal, 10], null],
       [[36, BoardDirection.AscendingDiagonal, 7], null],
       [[58, BoardDirection.AscendingDiagonal, -1], null],
+      [[7, BoardDirection.AscendingDiagonal, 1], null],
       [[10, BoardDirection.DescendingDiagonal, 1], 19],
       [[49, BoardDirection.DescendingDiagonal, 1], 58],
       [[21, BoardDirection.DescendingDiagonal, -2], 3],

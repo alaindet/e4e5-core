@@ -1,51 +1,51 @@
 import { SquareLabelEnum } from '../board';
 import { fromTextGrid } from '../serialization';
-import { getBishopAvailableSquares } from './bishop';
+import { getRookAvailableSquares } from './rook';
 
-describe('Available squares for bishop', () => {
+describe('Available squares for rook', () => {
 
   it('should return a valid binary board', () => {
     const board = fromTextGrid(`
       | | | | | | | | |
       | | | | |k| | | |
       | | | | | | | | |
-      | | | | |b| | | |
       | | | | | | | | |
+      | | | |R| | | | |
       | | | | |K| | | |
       | | | | | | | | |
       | | | | | | | | |
     `);
-    const result = getBishopAvailableSquares(board, SquareLabelEnum.E5);
-    expect(result?.filter(s => s === true).length).toBe(14);
+    const result = getRookAvailableSquares(board, SquareLabelEnum.D4);
+    expect(result?.filter(s => s === true).length).toBe(15);
   });
 
   it('should stop when meets other pieces', () => {
     const board = fromTextGrid(`
       | | | | | | | | |
       | | | | |k| | | |
-      | | | | | |p| | |
-      | | | | |b| | | |
-      | | | | | |P| | |
+      | | | | | | | | |
+      | |P| | |r|r| | |
+      | | | | | | | | |
       | | | | |K| | | |
-      | |P| | | | | | |
+      | | | | | | | | |
       | | | | | | | | |
     `);
-    const result = getBishopAvailableSquares(board, SquareLabelEnum.E5);
-    expect(result?.filter(s => s === true).length).toBe(8);
+    const result = getRookAvailableSquares(board, SquareLabelEnum.E5);
+    expect(result?.filter(s => s === true).length).toBe(7);
   });
 
   it('should return null if no squares are available', () => {
     const board = fromTextGrid(`
       | | | | | | | | |
       | | | | |k| | | |
-      | | | |p| |p| | |
-      | | | | |b| | | |
-      | | | |p| |p| | |
+      | | | | |P| | | |
+      | | | |P|R|P| | |
+      | | | | |P| | | |
       | | | | |K| | | |
       | | | | | | | | |
       | | | | | | | | |
     `);
-    const result = getBishopAvailableSquares(board, SquareLabelEnum.E5);
+    const result = getRookAvailableSquares(board, SquareLabelEnum.E5);
     expect(result).toBeNull();
   });
 });

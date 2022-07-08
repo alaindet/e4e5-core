@@ -11,7 +11,7 @@ export function getBishopAvailableSquares(board: Board, index: SquareIndex): (
   available[index] = true;
   let availableCount = 1;
 
-  const dirs: [BoardDirection, number][] = [
+  const branches: [BoardDirection, number][] = [
     [BoardDirection.AscendingDiagonal, 1],
     [BoardDirection.AscendingDiagonal, -1],
     [BoardDirection.DescendingDiagonal, 1],
@@ -43,7 +43,7 @@ export function getBishopAvailableSquares(board: Board, index: SquareIndex): (
     }
   };
 
-  dirs.forEach(([dir, unitTravel]) => exploreBranch(dir, unitTravel));
+  branches.forEach(([dir, unitTravel]) => exploreBranch(dir, unitTravel));
 
   if (availableCount === 1) {
     return null;

@@ -44,14 +44,14 @@ export function getSquareDelta(
 }
 
 export function getToSquare(
-  from: SquareIndex,
+  fromSquare: SquareIndex,
   dir: BoardDirection,
   amount: number,
   deltas?: { [dir in BoardDirection]: number },
 ): SquareIndex | null {
 
   if (amount === 0) {
-    return from;
+    return fromSquare;
   }
 
   if (amount < -7 || amount > 7) {
@@ -61,17 +61,17 @@ export function getToSquare(
   deltas = deltas ?? getSquareDeltas();
   const [v, h, asc, desc] = Object.values(BoardDirection);
   const delta = getSquareDelta(dir, amount, deltas);
-  const to = from + delta as SquareIndex;
+  const toSquare = fromSquare + delta as SquareIndex;
 
   if (
-    to < 0 ||
-    to > 63 ||
-    (dir === v && !areOnSameFile(from, to)) ||
-    (dir === h && !areOnSameRank(from, to)) ||
-    ((dir === asc || dir === desc) && !areOnSameDiagonal(from, to))
+    toSquare < 0 ||
+    toSquare > 63 ||
+    (dir === v && !areOnSameFile(fromSquare, toSquare)) ||
+    (dir === h && !areOnSameRank(fromSquare, toSquare)) ||
+    ((dir === asc || dir === desc) && !areOnSameDiagonal(fromSquare, toSquare))
   ) {
     return null;
   }
 
-  return to;
+  return toSquare;
 }
